@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, request, render_template
+from routes.products import products_bp  # Importa el Blueprint
 
 app = Flask(__name__)
+
+#Blueprint de productos
+app.register_blueprint(products_bp)
 
 @app.route('/')
 def home():
