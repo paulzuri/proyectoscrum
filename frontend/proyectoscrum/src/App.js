@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import ProductCatalog from './ProductCatalog';
 
+/*
 function App() {
   return (
     <div className="App">
@@ -18,6 +21,16 @@ function App() {
           Learn React
         </a>
       </header>
+    </div>
+  );
+}
+
+export default App;*/
+
+function App() {
+  return (
+    <div className="App">
+      <ProductCatalog />
     </div>
   );
 }
