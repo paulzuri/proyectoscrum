@@ -37,3 +37,21 @@ def create_product():
     }
     products.append(new_product)
     return jsonify(new_product), 201
+
+# Update
+@products_bp.route('/products/<int:product_id>', methods=['PUT'])
+def update_product(product_id):
+    product = next((p for p in products if p["id"] == product_id), None)
+    if product:
+        updated_data = request.get_json()
+        product.update(updated_data)
+        return jsonify(product), 200
+    return jsonify({"error": "Product not found"}), 404
+
+# Delete
+@products_bp.route('/products/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    global products
+    products = [p for p in products if p["id"] != product_id]
+    return jsonify({"message": "Product deleted"}), 200
+
