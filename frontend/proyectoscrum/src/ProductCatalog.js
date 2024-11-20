@@ -1,6 +1,7 @@
 
 import React from 'react';
-import './ProductCatalog.css'; // Puedes crear este archivo para estilos
+import './ProductCatalog.css';
+ // Puedes crear este archivo para estilos
 
 const ProductCatalog = () => {
  return (
