@@ -8,7 +8,7 @@ app.register_blueprint(products_bp)
 
 @app.route('/')
 def home():
-    return "Welcome to the Flask Backend!"
+    return "<h1>Welcome to the Flask Backend!</h1>"
 
 @app.route('/api', methods=['GET'])
 def api_example():
@@ -18,5 +18,11 @@ def api_example():
 def hello(name):
     return render_template('index.html', name=name)
 
+@app.route('/greet/<name>')
+def greet(name):
+    return f"Hello {name}"
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5555, debug=True)
+# app.run(host='127.0.0.0', port=5000, debug=True)
