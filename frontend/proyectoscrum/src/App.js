@@ -1,7 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
+import axios from "axios"; // Si usas axios
+
+const API_URL = "http://localhost:5000";
 
 /*
 function App() {
@@ -27,10 +30,34 @@ function App() {
 
 export default App;*/
 
+/*<ProductCatalog apiUrl={API_URL} />
+
+return (
+    <div className="App">      
+      <ProductCatalog />
+    </div>
+  );
+
+*/
+//Comprobar si funciona conexion
+
 function App() {
+  const [message, setMessage] = useState(""); // Estado para almacenar la respuesta del backend
+
+  useEffect(() => {
+    // Llamada al backend
+    fetch("http://127.0.0.1:5000/api") // Cambia la URL si es necesario
+      .then((response) => response.json())
+      .then((data) => setMessage(data.message))
+      .catch((error) => console.error("Error al conectar con el backend:", error));
+  }, []);
+
   return (
     <div className="App">
-      <ProductCatalog />
+      <header className="App-header">
+        <h1>Conexión con el Backend</h1>
+        <p>{message || "Cargando mensaje..."}</p>
+      </header>
     </div>
   );
 }
