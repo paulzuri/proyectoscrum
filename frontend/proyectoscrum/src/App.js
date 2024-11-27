@@ -3,7 +3,7 @@ import './App.css';
 import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
 import axios from "axios"; // Si usas axios
-
+import NavBar from './NavBar';
 const API_URL = "http://localhost:5000";
 
 /*
@@ -58,6 +58,8 @@ function App() {
         <h1>Conexión con el Backend</h1>
         <p>{message || "Cargando mensaje..."}</p>
       </header>
+      <NavBar/>
+      <ProductCatalog/>
     </div>
   );
 }
