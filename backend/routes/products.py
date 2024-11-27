@@ -29,7 +29,14 @@ products = [
 # Ruta para obtener todos los productos (Read)
 @products_bp.route('/products', methods=['GET'])
 def get_products():
-    products = list(products_collection.find({}, {'_id': 0}))  # Retrieve all products, exclude '_id'
+    products = []
+    for product in products_collection.find({}, {'_id': 0}):  # Exclude MongoDB's internal _id
+        # Transform data to match the frontend's requirements
+        products.append({
+            "name": product['nomb_producto'],
+            "price": float(product['precio'].replace(',', '.')),
+            "image": f"/images/{product['nomb_producto'].replace(' ', '_').lower()}.png"
+        })
     return jsonify(products)
 
 # Ruta para obtener un producto por ID (Read)

@@ -1,42 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ProductCatalog.css';
 import ProductList from './ProductList';
 
-import coca_cola from  './images/coca_cola.jpg';
-import doritos from  './images/doritos.png';
-import lava_limon from  './images/lava_limon.jpg';
-import leche from  './images/leche.png';
-
-
 const ProductCatalog = () => {
-  // Lista de productos simulados
-  const products = [
-    {
-      name: 'Coca Cola',
-      price: 1.0,
-      image: coca_cola,
-    },
-    {
-      name: 'Doritos',
-      price: 0.65,
-      image: doritos,
-    },
-    {
-      name: 'LAVA - Limón',
-      price: 2.0,
-      image: lava_limon,
-    },
-    {
-      name: 'Leche',
-      price: 3.0,
-      image: leche,
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5555/products');
+        if (!response.ok) {
+          throw new Error('HTTP error! Status: ${response.status}');
+        }
+        const data = await response.json();
+        console.log('Datos recibidos del backend:', data); // Inspecciona la estructura
+        setProducts(data); // Actualiza el estado
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setError('Failed to fetch products: ${err.message}');
+      }finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Se ejecuta solo una vez al montar el componente
 
   return (
     <div className="product-catalog">
       <h1>Catálogo de Productos</h1>
-      <ProductList products={products} />
+      {loading ? (
+        <p>Loading products...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <ProductList products={products} />
+      )}
     </div>
   );
 };

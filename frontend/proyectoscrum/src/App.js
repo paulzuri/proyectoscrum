@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
 import axios from "axios"; // Si usas axios
 import NavBar from './NavBar';
-const API_URL = "http://localhost:5000";
+const API_URL = "http://localhost:5555";
 
 /*
 function App() {
@@ -46,7 +46,7 @@ function App() {
 
   useEffect(() => {
     // Llamada al backend
-    fetch("http://127.0.0.1:5000/api") // Cambia la URL si es necesario
+    fetch("http://127.0.0.1:5555/api") // Cambia la URL si es necesario
       .then((response) => response.json())
       .then((data) => setMessage(data.message))
       .catch((error) => console.error("Error al conectar con el backend:", error));
