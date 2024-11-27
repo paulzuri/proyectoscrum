@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import ProductCatalog from './ProductCatalog';
+import NavBar from './NavBar';
 
 /*
 function App() {
@@ -30,6 +31,7 @@ export default App;*/
 function App() {
   return (
     <div className="App">
+      <NavBar />
       <ProductCatalog />
     </div>
   );
