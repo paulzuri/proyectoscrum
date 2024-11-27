@@ -7,6 +7,7 @@ import doritos from  './images/doritos.png';
 import lava_limon from  './images/lava_limon.jpg';
 import leche from  './images/leche.png';
 
+
 const ProductCatalog = () => {
   // Lista de productos simulados
   const products = [
