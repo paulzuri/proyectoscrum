@@ -4,7 +4,7 @@ import './FilterButton.css';
 const FilterButton = () => {
   const [showMenu, setShowMenu] = useState(false);
 
-  // Función para manejar el despliegue del menú
+  // Función para manejar el despliegue del menú.
   const toggleMenu = () => {
 
     console.log("Antes:", showMenu);
