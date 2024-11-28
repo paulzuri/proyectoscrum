@@ -7,21 +7,20 @@ const ProductCatalog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('http://localhost:5555/products');
         if (!response.ok) {
-          throw new Error('HTTP error! Status: ${response.status}');
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
         console.log('Datos recibidos del backend:', data); // Inspecciona la estructura
         setProducts(data); // Actualiza el estado
       } catch (error) {
         console.error('Error fetching products:', error);
-        setError('Failed to fetch products: ${err.message}');
-      }finally {
+        setError(`Failed to fetch products: ${error.message}`);
+      } finally {
         setLoading(false);
       }
     };
