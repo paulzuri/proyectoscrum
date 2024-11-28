@@ -2,9 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
-// import axios from "axios"; // Si usas axios
 import NavBar from './NavBar';
 import FilterButton from './FilterButton';
+import SearchBar from './SearchBar';  // Importa el componente SearchBar
 const API_URL = "http://localhost:5555";
 
 /*
@@ -51,9 +51,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => setMessage(data.message))
       .catch((error) => console.error("Error al conectar con el backend:", error));
-  }, []);
-
-  
+  }, []); 
 
   return (
     <div className="App">
@@ -61,9 +59,10 @@ function App() {
         <h1>Conexión con el Backend</h1>
         <p>{message || "Cargando mensaje..."}</p>
       </header>
-      <NavBar/>
-      <ProductCatalog/>
-      <FilterButton/>
+      <NavBar />
+      <SearchBar /> {/* Agrega el componente SearchBar aquí */}
+      <ProductCatalog />
+      <FilterButton />
     </div>
   );
 }
