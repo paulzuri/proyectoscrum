@@ -2,8 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
-import axios from "axios"; // Si usas axios
+// import axios from "axios"; // Si usas axios
 import NavBar from './NavBar';
+import FilterButton from './FilterButton';
 const API_URL = "http://localhost:5555";
 
 /*
@@ -52,6 +53,8 @@ function App() {
       .catch((error) => console.error("Error al conectar con el backend:", error));
   }, []);
 
+  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -60,6 +63,7 @@ function App() {
       </header>
       <NavBar/>
       <ProductCatalog/>
+      <FilterButton/>
     </div>
   );
 }
