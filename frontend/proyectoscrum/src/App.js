@@ -5,6 +5,7 @@ import ProductCatalog from './ProductCatalog';
 import NavBar from './NavBar';
 import FilterButton from './FilterButton';
 import SearchBar from './SearchBar';  // Importa el componente SearchBar
+import Footer from './Footer'; // Importa el Footer
 const API_URL = "http://localhost:5555";
 
 /*
@@ -60,8 +61,9 @@ function App() {
         <p>{message || "Cargando mensaje..."}</p>
       </header>
       <NavBar />
-      <SearchBar /> {/* Agrega el componente SearchBar aquí */}
+      <SearchBar /> {/* Agregado el componente SearchBar aquí */}
       <ProductCatalog />
+      <Footer /> {/* Agregado el Footer aquí */}
       <FilterButton />
     </div>
   );
