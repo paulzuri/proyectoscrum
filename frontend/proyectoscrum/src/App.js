@@ -62,9 +62,10 @@ function App() {
       </header>
       <NavBar />
       <SearchBar /> {/* Agregado el componente SearchBar aquí */}
+      <FilterButton />
       <ProductCatalog />
       <Footer /> {/* Agregado el Footer aquí */}
-      <FilterButton />
+
     </div>
   );
 }
