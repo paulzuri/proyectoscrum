@@ -14,8 +14,10 @@ function App() {
   return (
     <div className="App">
       <NavBar/>
-      <ProductCatalog/>
+      <SearchBar/>
       <FilterButton/>
+      <ProductCatalog/>
+      <Footer/>
     </div>
   );
 }
