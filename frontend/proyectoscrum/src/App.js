@@ -45,22 +45,8 @@ return (
 function App() {
   const [message, setMessage] = useState(""); // Estado para almacenar la respuesta del backend
 
-  useEffect(() => {
-    // Llamada al backend
-    fetch("http://127.0.0.1:5555/api") // Cambia la URL si es necesario
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error("Error al conectar con el backend:", error));
-  }, []);
-
-  
-
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Conexión con el Backend</h1>
-        <p>{message || "Cargando mensaje..."}</p>
-      </header>
       <NavBar/>
       <ProductCatalog/>
       <FilterButton/>
