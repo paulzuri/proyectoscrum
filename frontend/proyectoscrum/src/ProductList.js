@@ -9,7 +9,6 @@ const ProductList = ({ products }) => {
           <img src={product.image_url} alt={product.name} />
           <h2>{product.name}</h2>
           <p>${product.price.toFixed(2)}</p>
-
         </div>
       ))}
     </div>

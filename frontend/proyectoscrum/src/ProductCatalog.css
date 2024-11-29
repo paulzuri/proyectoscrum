@@ -13,7 +13,7 @@
 .product-catalog h1 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  color: #f68c29;
 }
 
 /* Contenedor de productos */
@@ -42,11 +42,13 @@
 
 /* Imagen del producto */
 .product-card img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  height: 150px; /* Establece una altura fija para las imágenes */
+  object-fit: cover; /* Asegura que las imágenes se recorten y se ajusten proporcionalmente */
   border-radius: 8px;
   margin-bottom: 10px;
 }
+
 
 /* Título del producto */
 .product-card h2 {
