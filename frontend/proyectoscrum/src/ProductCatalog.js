@@ -7,7 +7,7 @@ import goudaCheeseImage from './images/gouda-cheese.png';
 import tomateImage from './images/tomate.jpg';
 import supanBlancoImage from './images/supan-blanco.jpg';
 import bandejasPechugasImage from './images/Bandejas-Pechugas.png';
-import donVittorioImage from './images/don-Vittorio.png';
+import donVittorioImage from './images/don-vittorio.png';
 import aceiteOlivaImage from './images/Aceite_Oliva.jpg';
 import yogurtToniNaturalImage from './images/yogurt-toni-natural.png';
 import papelHigienicoImage from './images/papel_higienico.png';
