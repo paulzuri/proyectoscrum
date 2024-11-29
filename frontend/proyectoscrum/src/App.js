@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import FilterButton from './FilterButton';
 import SearchBar from './SearchBar';  // Importa el componente SearchBar
 import Footer from './Footer'; // Importa el Footer
+import LoginButton from './LoginButton'; // Importa el botón de login
 const API_URL = "http://localhost:5555";
 
 /*
@@ -62,6 +63,7 @@ function App() {
       </header>
       <NavBar />
       <SearchBar /> {/* Agregado el componente SearchBar aquí */}
+      <LoginButton /> {/* Agregado el botón aquí */}
       <ProductCatalog />
       <Footer /> {/* Agregado el Footer aquí */}
       <FilterButton />
