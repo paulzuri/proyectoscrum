@@ -2,7 +2,7 @@ import React from 'react';
 import './ShoppingCart.css'; // Asegúrate de crear este archivo CSS
 import cocaColaImage from './images/coca_cola.jpg';
 
-
+import { Link } from 'react-router-dom';
 
 import cerealImage from './images/cereal.png';
 import jugoNaranjaImage from './images/jugo_naranja.png';
@@ -57,7 +57,9 @@ const ShoppingCart = () => {
                 <p>Total: ${subtotal.toFixed(2)}</p>
             </div>
             <div className="cart-buttons">
-                <button className="continue-shopping">Continuar Comprando</button>
+                <Link to="/" className="">
+                    <button className="continue-shopping">Continuar Comprando</button>
+                </Link>
                 <button className="proceed-payment">Proceder con el Pago</button>
             </div>
         </div>
