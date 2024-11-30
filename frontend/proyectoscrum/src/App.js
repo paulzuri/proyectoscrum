@@ -1,48 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
 import NavBar from './NavBar';
 import FilterButton from './FilterButton';
 import SearchBar from './SearchBar';  // Importa el componente SearchBar
 import Footer from './Footer'; // Importa el Footer
-import LoginButton from './LoginButton'; // Importa el botón de login
+
+// import Cart from './Cart';
+import ShoppingCart from './ShoppingCart';
+
 const API_URL = "http://localhost:5555";
-
-/*
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;*/
-
-/*<ProductCatalog apiUrl={API_URL} />
-
-return (
-    <div className="App">      
-      <ProductCatalog />
-    </div>
-  );
-
-*/
-//Comprobar si funciona conexion
 
 function App() {
   const [message, setMessage] = useState(""); // Estado para almacenar la respuesta del backend
@@ -53,21 +22,25 @@ function App() {
       .then((response) => response.json())
       .then((data) => setMessage(data.message))
       .catch((error) => console.error("Error al conectar con el backend:", error));
-  }, []); 
+  }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Conexión con el Backend</h1>
-        <p>{message || "Cargando mensaje..."}</p>
-      </header>
-      <NavBar />
-      <SearchBar /> {/* Agregado el componente SearchBar aquí */}
-      <LoginButton /> {/* Agregado el botón aquí */}
-      <ProductCatalog />
-      <Footer /> {/* Agregado el Footer aquí */}
-      <FilterButton />
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <SearchBar />
+              <FilterButton />
+              <ProductCatalog />
+            </>
+          } />
+          <Route path="/cart" element={<ShoppingCart />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
