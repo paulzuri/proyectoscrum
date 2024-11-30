@@ -7,8 +7,12 @@ import NavBar from './NavBar';
 import FilterButton from './FilterButton';
 import SearchBar from './SearchBar';  // Importa el componente SearchBar
 import Footer from './Footer'; // Importa el Footer
+
 // import Cart from './Cart';
 import ShoppingCart from './ShoppingCart';
+import LoginPage from './LoginPage';
+
+
 const API_URL = "http://localhost:5555";
 
 function App() {
@@ -35,6 +39,7 @@ function App() {
             </>
           } />
           <Route path="/cart" element={<ShoppingCart />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
         <Footer />
       </div>

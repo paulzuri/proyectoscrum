@@ -21,7 +21,9 @@ const NavBar = () => {
         <Link to="/cart" className="navbar-icon">
           <img src={cartIcon} alt="Carrito" className="navbar-icon" />
         </Link>
-        <img src={userIcon} alt="Usuario" className="navbar-icon" />
+        <Link to="/login" className="navbar-icon">
+          <img src={userIcon} alt="Usuario" className="navbar-icon" />
+        </Link>
       </div>
     </nav>
   );
