@@ -32,6 +32,14 @@ const LoginPage = () => {
         />
         <button type="submit">Iniciar Sesión</button>
       </form>
+      <div className="login-links">
+        <a href="/forgot-password" className="login-link">
+          ¿Olvidaste tu contraseña?
+        </a>
+        <a href="/signup" className="login-link">
+          Crear cuenta
+        </a>
+      </div>
     </div>
   );
 };
