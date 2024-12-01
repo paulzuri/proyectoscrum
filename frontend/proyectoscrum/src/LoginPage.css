@@ -41,3 +41,23 @@
     background-color: #b36b00;
   }
   
+  .login-links {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .login-link {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .login-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
