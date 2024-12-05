@@ -1,0 +1,68 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.register-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%; /* Asegura que el formulario se ajuste al contenedor */
+    max-width: 300px; /* Tamaño máximo igual al formulario de login */
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Incluye el padding y borde en el ancho */
+}
+
+.register-form input {
+    width: calc(100% - 20px); /* Evita que el input sobresalga (ajustando al padding del formulario) */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box; /* Incluye padding y borde en el tamaño */
+}
+
+
+.register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffa220; /* Color similar al botón de login */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.register-form button:hover {
+    background-color: #b36b00; /* Cambiar a un tono más oscuro al pasar el mouse */
+}
+
+.register-form .google-button {
+    background-color: #4285f4; /* Azul de Google */
+    font-size: 16px; /* Tamaño de fuente */
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-form .google-button:hover {
+    background-color: #3367d6; /* Azul más oscuro al pasar el mouse */
+}
