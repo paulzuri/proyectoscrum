@@ -11,6 +11,8 @@ import Footer from './Footer'; // Importa el Footer
 // import Cart from './Cart';
 import ShoppingCart from './ShoppingCart';
 import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
+
 
 
 const API_URL = "http://localhost:5555";
@@ -40,6 +42,8 @@ function App() {
           } />
           <Route path="/cart" element={<ShoppingCart />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
+
         </Routes>
         <Footer />
       </div>
