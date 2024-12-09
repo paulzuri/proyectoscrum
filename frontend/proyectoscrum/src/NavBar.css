@@ -28,15 +28,16 @@
   }
   
   /* Estilo para la sección derecha (íconos) */
-  .navbar-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: 15px;
-    cursor: pointer;
-  }
+/* Estilo para la sección derecha (íconos) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Añade espacio entre los íconos */
+}
+
+.navbar-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
   
