@@ -34,6 +34,7 @@ def get_products():
         # Transform data to match the frontend's requirements
         products.append({
             "name": product['nomb_producto'],
+            "stock": int(product['stock']),
             "price": float(product['precio'].replace(',', '.')),
             "image_url": f"http://localhost:5555/images/{image_filename}"
         })
