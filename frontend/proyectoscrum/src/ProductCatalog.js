@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './ProductCatalog.css';
 import ProductList from './ProductList';
 
+import supan from "./images/supan-blanco.jpg";
+
 const ProductCatalog = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,8 +17,20 @@ const ProductCatalog = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Datos recibidos del backend:', data); // Inspecciona la estructura
-        setProducts(data); // Actualiza el estado
+
+        console.log('Datos recibidos del backend:', data);
+
+        // Agregar un producto ficticio con stock 0 para pruebas
+        const testProduct = {
+          id: 999,
+          name: 'Producto Sin Stock',
+          price: 10.0,
+          stock: 0,
+          image_url: supan, // URL de imagen de prueba
+        };
+
+        // Agregar el producto ficticio a la lista
+        setProducts([...data, testProduct]);
       } catch (error) {
         console.error('Error fetching products:', error);
         setError(`Failed to fetch products: ${error.message}`);

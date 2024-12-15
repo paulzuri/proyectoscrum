@@ -77,3 +77,9 @@
 .product-card button:hover {
   background-color: #ffa200;
 }
+
+/* Efecto de escala de grises para productos sin stock */
+.product-card.out-of-stock {
+  filter: grayscale(100%);
+  opacity: 0.6;
+}

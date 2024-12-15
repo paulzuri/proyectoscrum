@@ -5,9 +5,13 @@ const ProductList = ({ products }) => {
   return (
     <div className="product-container">
       {products.map((product, index) => (
-        <div key={index} className="product-card">
+        <div
+          key={index}
+          className={`product-card ${product.stock === 0 ? 'out-of-stock' : ''}`}
+        >
           <img src={product.image_url} alt={product.name} />
           <h2>{product.name}</h2>
+          <h2>{product.stock}</h2>          
           <p>${product.price.toFixed(2)}</p>
         </div>
       ))}
