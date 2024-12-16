@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProductCatalog.css';
-import ProductList from './ProductList';
-
+import { Link } from 'react-router-dom';  // Importa Link para la navegación
 import supan from "./images/supan-blanco.jpg";
 
 const ProductCatalog = () => {
@@ -18,15 +17,14 @@ const ProductCatalog = () => {
         }
         const data = await response.json();
 
-        console.log('Datos recibidos del backend:', data);
-
         // Agregar un producto ficticio con stock 0 para pruebas
         const testProduct = {
           id: 999,
           name: 'Producto Sin Stock',
           price: 10.0,
           stock: 0,
-          image_url: supan, // URL de imagen de prueba
+          description: 'Este es un producto de prueba sin stock',
+          image_url: supan,
         };
 
         // Agregar el producto ficticio a la lista
@@ -50,7 +48,19 @@ const ProductCatalog = () => {
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <ProductList products={products} />
+        <div className="product-container">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className={`product-card ${product.stock === 0 ? 'out-of-stock' : ''}`}
+            >
+              <img src={product.image_url} alt={product.name} />
+              <h2>{product.name}</h2>
+              <p>${product.price.toFixed(2)}</p>
+              <Link to={`/product/${product.id}`} className="product-link">Ver Detalles</Link>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
