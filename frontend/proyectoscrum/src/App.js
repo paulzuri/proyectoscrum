@@ -1,74 +1,52 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import React, { useState, useEffect } from "react"; // Importa React y los hooks
 import ProductCatalog from './ProductCatalog';
 import NavBar from './NavBar';
 import FilterButton from './FilterButton';
-import SearchBar from './SearchBar';  // Importa el componente SearchBar
-import Footer from './Footer'; // Importa el Footer
-import LoginButton from './LoginButton'; // Importa el botón de login
-const API_URL = "http://localhost:5555";
+import SearchBar from './SearchBar';
+import Footer from './Footer';
+import ShoppingCart from './ShoppingCart';
+import LoginPage from './LoginPage';
+import RegisterPage from './RegisterPage';
+import ProductDetail from './ProductDetail';  // Importamos el componente de detalles del producto
 
-/*
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;*/
-
-/*<ProductCatalog apiUrl={API_URL} />
-
-return (
-    <div className="App">      
-      <ProductCatalog />
-    </div>
-  );
-
-*/
-//Comprobar si funciona conexion
-
-function App() {
-  const [message, setMessage] = useState(""); // Estado para almacenar la respuesta del backend
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [products, setProducts] = useState([]);  // Estado para almacenar los productos
 
   useEffect(() => {
-    // Llamada al backend
-    fetch("http://127.0.0.1:5555/api") // Cambia la URL si es necesario
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error("Error al conectar con el backend:", error));
-  }, []); 
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5555/products');
+        const data = await response.json();
+        setProducts(data);  // Guarda los productos en el estado
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Conexión con el Backend</h1>
-        <p>{message || "Cargando mensaje..."}</p>
-      </header>
-      <NavBar />
-      <SearchBar /> {/* Agregado el componente SearchBar aquí */}
-      <LoginButton /> {/* Agregado el botón aquí */}
-      <ProductCatalog />
-      <Footer /> {/* Agregado el Footer aquí */}
-      <FilterButton />
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <Routes>
+          <Route path="/" element={<><SearchBar /><FilterButton /><ProductCatalog products={products} /></>} />
+          <Route path="/cart" element={isAuthenticated ? <ShoppingCart /> : <LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/product/:id" element={<ProductDetail products={products} />} /> {/* Asegúrate de pasar los productos aquí */}
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
