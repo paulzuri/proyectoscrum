@@ -1,22 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './NavBar.css';
-import logo from './images/logo.png'; // Reemplaza con el logo de tu tienda
-import cartIcon from './images/carrito.png'; // Reemplaza con el icono de carrito
-import userIcon from './images/user.png'; // Reemplaza con el icono de usuario
+import logo from './images/logo.png'; // Logo de tu tienda
+import cartIcon from './images/carrito.png'; // Ícono de carrito
+import userIcon from './images/user.png'; // Ícono de usuario
+import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const NavBar = ({ isAuthenticated, onLogout }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
-      {/* Logo y nombre */}
+      {/* Logo */}
       <div className="navbar-left">
-        <img src={logo} alt="Logo" className="navbar-logo" />
-        <h1 className="navbar-title">Tienda Virtual</h1>
+        <Link to="/" className="navbar-home-link">
+          <img src={logo} alt="Logo" className="navbar-logo" />
+          <h1 className="navbar-title">Tienda Virtual</h1>
+        </Link>
       </div>
 
-      {/* Íconos de carrito y usuario */}
+      {/* Íconos */}
       <div className="navbar-right">
-        <img src={cartIcon} alt="Carrito" className="navbar-icon" />
-        <img src={userIcon} alt="Usuario" className="navbar-icon" />
+        {/* Carrito */}
+        <div className={`navbar-icon-wrapper ${!isAuthenticated ? 'disabled' : ''}`}>
+          <Link
+            to={isAuthenticated ? '/cart' : '#'}
+            className="navbar-icon"
+            onClick={(e) => {
+              if (!isAuthenticated) e.preventDefault();
+            }}
+          >
+            <img src={cartIcon} alt="Carrito" className="navbar-icon" />
+          </Link>
+          {!isAuthenticated && <div className="tooltip">Primero debes iniciar sesión</div>}
+        </div>
+
+        {/* Usuario */}
+        <div className="navbar-user">
+          <img
+            src={userIcon}
+            alt="Usuario"
+            className="navbar-icon"
+            onClick={toggleMenu}
+          />
+          {isMenuOpen && (
+            <div className="user-menu">
+              {isAuthenticated ? (
+                <button className="user-menu-item" onClick={onLogout}>
+                  Cerrar sesión
+                </button>
+              ) : (
+                <Link to="/login" className="user-menu-item">
+                  Iniciar sesión
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

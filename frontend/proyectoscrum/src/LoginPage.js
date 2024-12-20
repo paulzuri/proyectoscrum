@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -32,6 +34,15 @@ const LoginPage = () => {
         />
         <button type="submit">Iniciar Sesión</button>
       </form>
+      <div className="login-links">
+        <Link to="/forgot-password" className="login-link">
+          ¿Olvidaste tu contraseña?
+        </Link>
+        <Link to="/signup" className="login-link">
+          Crear cuenta
+        </Link>
+      </div>
+
     </div>
   );
 };

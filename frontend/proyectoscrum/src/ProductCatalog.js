@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ProductCatalog.css';
-import ProductList from './ProductList';
-
-// Importar imágenes
-import goudaCheeseImage from './images/gouda-cheese.png';
-import tomateImage from './images/tomate.jpg';
-import supanBlancoImage from './images/supan-blanco.jpg';
-import bandejasPechugasImage from './images/Bandejas-Pechugas.png';
-import donVittorioImage from './images/don-Vittorio.png';
-import aceiteOlivaImage from './images/Aceite_Oliva.jpg';
-import yogurtToniNaturalImage from './images/yogurt-toni-natural.png';
-import papelHigienicoImage from './images/papel_higienico.png';
-import cerealImage from './images/cereal.png';
-import jugoNaranjaImage from './images/jugo_naranja.png';
+import { Link } from 'react-router-dom';  // Importa Link para la navegación
+import supan from "./images/supan-blanco.jpg";
 
 const ProductCatalog = () => {
   const [products, setProducts] = useState([]);
@@ -27,8 +16,19 @@ const ProductCatalog = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Datos recibidos del backend:', data); // Inspecciona la estructura
-        setProducts(data); // Actualiza el estado
+
+        // Agregar un producto ficticio con stock 0 para pruebas
+        const testProduct = {
+          id: 999,
+          name: 'Producto Sin Stock',
+          price: 10.0,
+          stock: 0,
+          description: 'Este es un producto de prueba sin stock',
+          image_url: supan,
+        };
+
+        // Agregar el producto ficticio a la lista
+        setProducts([...data, testProduct]);
       } catch (error) {
         console.error('Error fetching products:', error);
         setError(`Failed to fetch products: ${error.message}`);
@@ -40,20 +40,6 @@ const ProductCatalog = () => {
     fetchProducts();
   }, []); // Se ejecuta solo una vez al montar el componente
 
-  // Atributos de los productos (sin incluir la parte de renderizado HTML)
-  const allProducts = [
-    { name: 'Queso Gouda', price: 5.0, image: goudaCheeseImage },
-    { name: 'Tomates', price: 1.8, image: tomateImage },
-    { name: 'Sopan Blanco', price: 3.0, image: supanBlancoImage },
-    { name: 'Pechugas de Pollo', price: 7.5, image: bandejasPechugasImage },
-    { name: 'Don Vittorio', price: 4.0, image: donVittorioImage },
-    { name: 'Aceite de Oliva', price: 4.5, image: aceiteOlivaImage },
-    { name: 'Yogurt Toni Natural', price: 3.0, image: yogurtToniNaturalImage },
-    { name: 'Papel Higiénico', price: 2.2, image: papelHigienicoImage },
-    { name: 'Cereal', price: 3.5, image: cerealImage },
-    { name: 'Jugo de Naranja', price: 2.8, image: jugoNaranjaImage },
-  ];
-
   return (
     <div className="product-catalog">
       <h1>Catálogo de Productos</h1>
@@ -62,7 +48,19 @@ const ProductCatalog = () => {
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <ProductList products={allProducts} />
+        <div className="product-container">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className={`product-card ${product.stock === 0 ? 'out-of-stock' : ''}`}
+            >
+              <img src={product.image_url} alt={product.name} />
+              <h2>{product.name}</h2>
+              <p>${product.price.toFixed(2)}</p>
+              <Link to={`/product/${product.id}`} className="product-link">Ver Detalles</Link>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

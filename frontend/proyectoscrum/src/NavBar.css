@@ -28,15 +28,134 @@
   }
   
   /* Estilo para la sección derecha (íconos) */
-  .navbar-right {
-    display: flex;
-    align-items: center;
-  }
+/* Estilo para la sección derecha (íconos) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Añade espacio entre los íconos */
+}
+
+.navbar-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.navbar-user {
+  position: relative;
+}
+
+/* Menú desplegable */
+.user-menu {
+  position: absolute;
+  top: 40px; /* Ajusta según sea necesario */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  min-width: 150px;
+}
+
+/* Items del menú desplegable */
+.user-menu-item {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.user-menu-item:hover {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
   
-  .navbar-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: 15px;
-    cursor: pointer;
-  }
-  
+
+.navbar-user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.navbar-user-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.navbar-user-menu:hover .navbar-user-dropdown {
+  display: block;
+}
+
+.navbar-user-dropdown p {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.navbar-user-dropdown button {
+  padding: 5px 10px;
+  background-color: #ffa220;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.navbar-user-dropdown button:hover {
+  background-color: #b36b00;
+}
+
+.login-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Envuelve el ícono del carrito */
+.navbar-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.navbar-icon-wrapper.disabled {
+  cursor: not-allowed;
+  opacity: 0.5; /* Reduce la opacidad para mostrar que está deshabilitado */
+}
+
+/* Tooltip para el carrito deshabilitado */
+.tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  bottom: -30px; /* Ajusta según la posición del ícono */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+  font-size: 0.75rem;
+}
+
+.navbar-icon-wrapper.disabled:hover .tooltip {
+  visibility: visible;
+}
