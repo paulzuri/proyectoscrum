@@ -1,12 +1,15 @@
-import React, {useState} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form"
+import { useAuth } from '../context/AuthContext';
 
 
 
 const Register = () => {
     const [message, setMessage] = useState("")
+    const {registerUser, signInWithGoogle} = useAuth();
+    console.log(registerUser)
     const {
         register,
         handleSubmit,
@@ -14,16 +17,35 @@ const Register = () => {
         formState: { errors },
       } = useForm()
 
-    const onSubmit = (data) => console.log(data)
+      //registeruser
+    const onSubmit = async(data) => {
+        console.log(data)
+        try {
+            await registerUser(data.email, data.password);
+            alert("Registro del usuario exitoso")
+        } catch (error) {
+            setMessage("Porfavor, ingresa un correo y contrasena valido")
+            console.error(error)
+        }
+    }
     const handleGoogleSignIn = async () => {
-        
+        try {
+            await signInWithGoogle();
+            alert("Se ha registrado con google correctamente");
+            navigate("/")
+        } catch (error) {
+            alert("Inicio con google fallido")
+            console.error(error)
+        }
     }
   return (
     
 <div className='h-[calc(100vh-120px)] flex items-center justify-center'>
     <div className="w-full max-w-sm mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h2 className='text-xl font-semibold mb-4'>Registrese por favor</h2>
+
         <form onSubmit={handleSubmit(onSubmit)}>
+
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Email
