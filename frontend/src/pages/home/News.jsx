@@ -24,14 +24,14 @@ import news4 from '../../assets/news/news-4.png'
 const news = [
     {
         "id": 1,
-        "title": "Global Climate Summit Calls for Urgent Action",
-        "description": "World leaders gather at the Global Climate Summit to discuss urgent strategies to combat climate change, focusing on reducing carbon emissions and fostering renewable energy solutions.",
+        "title": "Frizi abre nuevas sucursales en Valle de los Chillos",
+        "description": "Ahora Frizi está más cerca de ti, con nuevas sucursales para que tus compras sean más rápidas y cómodas. Visítanos en Valle de los Chillos.",
         "image": news1
     },
     {
         "id": 2,
-        "title": "Breakthrough in AI Technology Announced",
-        "description": "A major breakthrough in artificial intelligence has been announced by researchers, with new advancements promising to revolutionize industries from healthcare to finance.",
+        "title": "El compromiso de Frizi con la comunidad",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget nunc. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc ultricies ultricies.",
         "image": news2
     },
     {
@@ -57,7 +57,7 @@ const news = [
 const News = () => {
   return (
     <div className='py-16'>
-        <h2 className='text-3x1 font-semibold mv-6'>News </h2>
+        <h2 className='text-3x1 font-semibold mv-6'>Noticias </h2>
 
         <Swiper
         slidesPerView={1}
