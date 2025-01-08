@@ -13,21 +13,21 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
-const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
+const categories = ["Escoge una categoria", "Frutas y Verduras", "Carnes y Pescados", "Lacteos y Huevos", "Granos y Cereales", "Panaderia", "Bebidas", "Congelados", "Snacks", "Limpieza y Hogar", "Mascotas", "Condimentos"]
 
 const TopSellers = () => {
 
-    const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
+    const [selectedCategory, setSelectedCategory] = useState("Escoge una categoria");
 
     const {data: books = []} = useFetchAllBooksQuery();
  
 
-    const filteredBooks = selectedCategory === "Choose a genre" ? books : books.filter(book => book.category === selectedCategory.toLowerCase())
+    const filteredBooks = selectedCategory === "Escoge una categoria" ? books : books.filter(book => book.category === selectedCategory.toLowerCase())
 
     
     return (
         <div className='py-10'>
-            <h2 className='text-3xl font-semibold mb-6'>Top Sellers</h2>
+            <h2 className='text-3xl font-semibold mb-6'>Mas vendidos</h2>
             {/* category filtering */}
             <div className='mb-8 flex items-center'>
                 <select

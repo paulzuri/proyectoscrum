@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 
-import bannerImg from "../../assets/banner.png"
+import bannerImg from "../../assets/FriziBanner.png"
 
 const Banner = () => {
     return (
@@ -10,10 +11,12 @@ const Banner = () => {
             </div>
 
             <div className='md:w-1/2 w-full'>
-                <h1 className='md:text-5xl text-2xl font-medium mb-7'>New Releases This Week</h1>
-                <p className='mb-10'>It's time to update your reading list with some of the latest and greatest releases in the literary world. From heart-pumping thrillers to captivating memoirs, this week's new releases offer something for everyone</p>
+                <h1 className='md:text-5xl text-2xl font-medium mb-7'> Obten tus viveres frescos con Frizi</h1>
+                <p className='mb-10'>Abastece tu hogar con lo mejor y más fresco de nuestra colección de víveres. Desde productos recién cosechados hasta básicos para tu despensa, el catalogo de frizy tienen todo lo que necesitas para mantener tu despensa llena y tus comidas deliciosas.</p>
 
-                <button className='btn-primary'>Subscribe</button>
+                <Link to="/login" className="btn-primary">
+                Inicia Sesión
+                </Link>
             </div>
 
 

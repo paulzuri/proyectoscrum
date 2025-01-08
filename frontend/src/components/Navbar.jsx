@@ -41,7 +41,7 @@ const Navbar = () => {
 
                     <IoSearchOutline className="absolute inline-block left-3 inset-y-2" />
 
-                    <input type="text" placeholder="Search here"
+                    <input type="text" placeholder="Buscar"
                         className="bg-[#EAEAEA] w-full py-1 md:px-8 px-6 rounded-md focus:outline-none"
                     />
                 </div>
