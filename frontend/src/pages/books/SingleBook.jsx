@@ -6,10 +6,11 @@ import { getImgUrl } from '../../utils/getImgUrl';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi';
+import { useFetchProductByIdQuery } from '../../redux/features/products/productsApi';
 
 const SingleBook = () => {
     const {id} = useParams();
-    const {data: book, isLoading, isError} = useFetchBookByIdQuery(id);
+    const {data: book, isLoading, isError} = useFetchProductByIdQuery(id);
 
     const dispatch =  useDispatch();
 
@@ -18,7 +19,7 @@ const SingleBook = () => {
     }
 
     if(isLoading) return <div>Loading...</div>
-    if(isError) return <div>Error happending to load book info</div>
+    if(isError) return <div>Error happened while trying to load book info</div>
   return (
     <div className="max-w-lg shadow-md p-5">
             <h1 className="text-2xl font-bold mb-6">{book.title}</h1>

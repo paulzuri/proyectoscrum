@@ -22,14 +22,14 @@ const CartPage = () => {
             <div className="flex mt-12 h-full flex-col overflow-hidden bg-white shadow-xl">
                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                     <div className="flex items-start justify-between">
-                        <div className="text-lg font-medium text-gray-900">Shopping cart</div>
+                        <div className="text-lg font-medium text-gray-900">Carrito de compras</div>
                         <div className="ml-3 flex h-7 items-center ">
                             <button
                                 type="button"
                                 onClick={handleClearCart }
                                 className="relative -m-2 py-1 px-2 bg-red-500 text-white rounded-md hover:bg-secondary transition-all duration-200  "
                             >
-                                <span className="">Clear Cart</span>
+                                <span className="">Borrar todos los productos del carrito</span>
                             </button>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ const CartPage = () => {
                                                                 <button
                                                                 onClick={() => handleRemoveFromCart(product)}
                                                                 type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                    Remove
+                                                                    Remover
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -80,7 +80,7 @@ const CartPage = () => {
 
 
                                     </ul>
-                                ) : (<p>No product found!</p>)
+                                ) : (<p>¡No has comprado nada aún!</p>)
                             }
 
 
@@ -93,7 +93,7 @@ const CartPage = () => {
                         <p>Subtotal</p>
                         <p>${totalPrice ? totalPrice : 0}</p>
                     </div>
-                    <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                    <p className="mt-0.5 text-sm text-gray-500">Precio final calculado en el checkout.</p>
                     <div className="mt-6">
                         <Link
                             to="/checkout"
@@ -104,13 +104,13 @@ const CartPage = () => {
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <Link to="/">
-                            or
+                            o
                             <button
                                 type="button"
 
                                 className="font-medium text-indigo-600 hover:text-indigo-500 ml-1"
                             >
-                                Continue Shopping
+                                seguir comprando
                                 <span aria-hidden="true"> &rarr;</span>
                             </button>
                         </Link>
