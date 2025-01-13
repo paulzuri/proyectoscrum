@@ -42,7 +42,7 @@ const BookCard = ({book}) => {
                     onClick={() => handleAddToCart(book)}
                     className="btn-primary px-6 space-x-1 flex items-center gap-1 ">
                         <FiShoppingCart className="" />
-                        <span>Añadir al carrito</span>
+                        <span>Comprar 🤑</span>
                     </button>
                 </div>
             </div>
