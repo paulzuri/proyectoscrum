@@ -30,16 +30,16 @@ const AdminLogin = () => {
                 localStorage.setItem('token', auth.token);
                 setTimeout(() => {
                     localStorage.removeItem('token')
-                    alert('Token has been expired!, Please login again.');
+                    alert('La sesion expiro!, vuelve a iniciar sesion');
                     navigate("/")
                 }, 3600 * 1000)
             }
 
-            alert("Admin Login successful!")
+            alert("Inicio de sesion exitoso!")
             navigate("/dashboard")
 
         } catch (error) {
-            setMessage("Please provide a valid email and password") 
+            setMessage("Por favor llena los campos con los datos correctos") 
             console.error(error)
         }
       }
@@ -50,7 +50,7 @@ const AdminLogin = () => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor="username">Username</label>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor="username">Usuario</label>
                     <input 
                     {...register("username", { required: true })} 
                     type="text" name="username" id="username" placeholder='username'
@@ -58,7 +58,7 @@ const AdminLogin = () => {
                     />
                 </div>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor="password">Password</label>
+                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor="password">Contraseña</label>
                     <input 
                     {...register("password", { required: true })} 
                     type="password" name="password" id="password" placeholder='Password'
@@ -73,7 +73,7 @@ const AdminLogin = () => {
                 </div>
             </form>
 
-            <p className='mt-5 text-center text-gray-500 text-xs'>©2025 Book Store. All rights reserved.</p>
+            <p className='mt-5 text-center text-gray-500 text-xs'>©2025 Frizi. Derechos reservados.</p>
         </div>
     </div>
   )
