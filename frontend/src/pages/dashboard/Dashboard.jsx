@@ -46,7 +46,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <span className="block text-2xl font-bold">{data?.totalBooks}</span>
-                  <span className="block text-gray-500">Products</span>
+                  <span className="block text-gray-500">Productos</span>
                 </div>
               </div>
               <div className="flex items-center p-8 bg-white shadow rounded-lg">
@@ -57,7 +57,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <span className="block text-2xl font-bold">${data?.totalSales}</span>
-                  <span className="block text-gray-500">Total Sales</span>
+                  <span className="block text-gray-500">Ventas Totales</span>
                 </div>
               </div>
               <div className="flex items-center p-8 bg-white shadow rounded-lg">
@@ -69,7 +69,7 @@ const Dashboard = () => {
                 <div>
                   <span className="inline-block text-2xl font-bold">{data?.trendingBooks}</span>
                   <span className="inline-block text-xl text-gray-500 font-semibold">(13%)</span>
-                  <span className="block text-gray-500">Trending Books in This Month</span>
+                  <span className="block text-gray-500">Productos mas vendidos</span>
                 </div>
               </div>
               <div className="flex items-center p-8 bg-white shadow rounded-lg">
@@ -78,13 +78,13 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <span className="block text-2xl font-bold">{data?.totalOrders}</span>
-                  <span className="block text-gray-500">Total Orders</span>
+                  <span className="block text-gray-500">Ordenes Totales</span>
                 </div>
               </div>
             </section>
             <section className="grid md:grid-cols-2 xl:grid-cols-4 xl:grid-rows-3 xl:grid-flow-col gap-6">
               <div className="flex flex-col md:col-span-2 md:row-span-2 bg-white shadow rounded-lg">
-                <div className="px-6 py-5 font-semibold border-b border-gray-100">The number of orders per month</div>
+                <div className="px-6 py-5 font-semibold border-b border-gray-100">Numero de ordenes por mes</div>
                 <div className="p-4 flex-grow">
                   <div className="flex items-center justify-center h-full px-4 py-16 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">
                   <RevenueChart />
@@ -101,7 +101,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <span className="block text-2xl font-bold">02</span>
-                  <span className="block text-gray-500">Orders left</span>
+                  <span className="block text-gray-500">Ordenes pendientes</span>
                 </div>
               </div>
               <div className="flex items-center p-8 bg-white shadow rounded-lg">
@@ -112,14 +112,14 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <span className="block text-2xl font-bold">139</span>
-                  <span className="block text-gray-500">Website visits (last day)</span>
+                  <span className="block text-gray-500">Visitas (ultimo dia)</span>
                 </div>
               </div>
               <div className="row-span-3 bg-white shadow rounded-lg">
                 <div className="flex items-center justify-between px-6 py-5 font-semibold border-b border-gray-100">
-                  <span>Users by average order</span>
+                  <span>Top Usuarios</span>
                   <button type="button" className="inline-flex justify-center rounded-md px-1 -mr-1 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-600" id="options-menu" aria-haspopup="true" aria-expanded="true">
-                    Descending
+                    Descendente
                     <svg className="-mr-1 ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
@@ -187,16 +187,8 @@ const Dashboard = () => {
                   </ul>
                 </div>
               </div>
-              <div className="flex flex-col row-span-3 bg-white shadow rounded-lg">
-                <div className="px-6 py-5 font-semibold border-b border-gray-100">Students by type of studying</div>
-                <div className="p-4 flex-grow">
-                  <div className="flex items-center justify-center h-full px-4 py-24 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">Chart</div>
-                </div>
-              </div>
             </section>
-            <section className="text-right font-semibold text-gray-500">
-              <a href="#" className="text-purple-600 hover:underline">Recreated on Codepen</a> with <a href="https://tailwindcss.com/" className="text-teal-400 hover:underline">Tailwind CSS</a> by Azri Kahar, <a href="https://dribbble.com/shots/10711741-Free-UI-Kit-for-Figma-Online-Courses-Dashboard" className="text-purple-600 hover:underline">original design</a> made by Chili Labs
-            </section>
+            
     </>
   )
 }

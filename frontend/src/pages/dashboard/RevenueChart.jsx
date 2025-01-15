@@ -31,7 +31,7 @@ const RevenueChart = () => {
       },
       title: {
         display: true,
-        text: 'Monthly Revenue',
+        text: 'Ventas Mensuales',
       },
     },
     scales: {
@@ -43,7 +43,7 @@ const RevenueChart = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">Monthly Revenue</h2>
+      <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">Ventas Mensuales</h2>
       <div className='hidden md:block'>
       <Bar data={data} options={options} className='' />
       </div>
