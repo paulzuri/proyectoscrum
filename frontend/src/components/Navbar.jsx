@@ -89,8 +89,8 @@ const Navbar = () => {
                     <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
                         <HiOutlineShoppingCart className='' />
                         {
-                           cartItems.lenght > 0 ? <span className="text-sm font-semibold 
-                           sm:ml-1">{cartItems.lenght}</span> : <span className="text-sm 
+                           cartItems.length > 0 ? <span className="text-sm font-semibold 
+                           sm:ml-1">{cartItems.length}</span> : <span className="text-sm 
                            font-semibold sm:ml-1">0</span>
                         }
                         

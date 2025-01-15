@@ -6,10 +6,11 @@ import { getImgUrl } from '../../utils/getImgUrl';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi';
+import { useFetchProductByIdQuery } from '../../redux/features/products/productsApi';
 
 const SingleBook = () => {
     const {id} = useParams();
-    const {data: book, isLoading, isError} = useFetchBookByIdQuery(id);
+    const {data: book, isLoading, isError} = useFetchProductByIdQuery(id);
 
     const dispatch =  useDispatch();
 

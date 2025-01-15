@@ -13,16 +13,16 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
-
+import { useFetchAllProductsQuery } from '../../redux/features/products/productsApi';
 
 
 const Recommended = () => {
     
-    const {data: books = []} = useFetchAllBooksQuery();
+    const {data: books = []} = useFetchAllProductsQuery();
 
    return (
     <div className='py-16'>
-        <h2 className='text-3xl font-semibold mb-6'>Recomendado para ti </h2>
+        <h2 className='text-3xl font-semibold mb-6'>Todos los productos </h2>
         <Swiper
                 slidesPerView={1}
                 spaceBetween={30}
