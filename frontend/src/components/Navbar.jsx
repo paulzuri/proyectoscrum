@@ -10,9 +10,8 @@ import { useAuth } from "../context/AuthContext";
 
 const navigation = [
     { name: "Dashboard", href: "/user-dashboard" },
-    { name: "Orders", href: "/orders" },
-    { name: "Cart Page", href: "/cart" },
-    { name: "Check Out", href: "/checkout" },
+    { name: "Ordenes", href: "/orders" },
+    { name: "Carrito", href: "/cart" },
 ]
 
 const Navbar = () => {
@@ -72,7 +71,7 @@ const Navbar = () => {
                                                 <li>
                                                     <button 
                                                     onClick={handleLogOut}
-                                                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Logout</button>
+                                                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Cerrar Sesion</button>
                                                 </li>
                                             </ul>
                                         </div>
