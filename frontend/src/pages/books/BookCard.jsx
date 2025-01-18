@@ -13,6 +13,11 @@ const BookCard = ({book}) => {
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
     }
+
+    if (book?.stock === 0) {
+        return null;
+    }
+
     return (
         <div className=" rounded-lg transition-shadow duration-300">
             <div
@@ -38,6 +43,7 @@ const BookCard = ({book}) => {
                     <p className="font-medium mb-5">
                         ${book?.newPrice} <span className="line-through font-normal ml-2">$ {book?.oldPrice}</span>
                     </p>
+                    <p className="text-gray-800 mb-4">Stock: {book?.stock}</p>
                     <button 
                     onClick={() => handleAddToCart(book)}
                     className="btn-primary px-6 space-x-1 flex items-center gap-1 ">
