@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form"
@@ -17,17 +17,33 @@ const Register = () => {
         formState: { errors },
       } = useForm()
 
+      // Watch email field value
+    const emailValue = watch("email");
+
+    // Clear error message when email field is cleared
+    useEffect(() => {
+        if (!emailValue) {
+            setMessage("");
+        }
+    }, [emailValue]);
+
       //registeruser
-    const onSubmit = async(data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
         try {
             await registerUser(data.email, data.password);
-            alert("Registro del usuario exitoso")
+            alert(
+                "Registro exitoso. Por favor, revisa tu correo electrónico para verificar tu cuenta."
+            );
         } catch (error) {
-            setMessage("Porfavor, ingresa un correo y contrasena valido")
-            console.error(error)
+            if (error.message === "Este correo ya está en uso. Por favor, utiliza otro.") {
+                setMessage(error.message); // Mostrar el mensaje en pantalla
+            } else {
+                setMessage("Ha ocurrido un error. Por favor, intenta nuevamente.");
+            }
+            console.error(error);
         }
-    }
+    };
+
     const handleGoogleSignIn = async () => {
         try {
             await signInWithGoogle();
