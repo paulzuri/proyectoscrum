@@ -12,7 +12,6 @@ import { Pagination, Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 import { useFetchAllProductsQuery } from '../../redux/features/products/productsApi';
 
 

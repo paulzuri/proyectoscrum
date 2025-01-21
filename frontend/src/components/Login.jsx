@@ -10,6 +10,8 @@ const Login = () => {
     const [message, setMessage] = useState("")
     const {loginUser, signInWithGoogle} = useAuth();
     const navigate = useNavigate()
+    const [attempts, setAttempts] = useState(0);
+    const [isBlocked, setIsBlocked] = useState(false);
 
     const {
         register,
@@ -19,13 +21,24 @@ const Login = () => {
       } = useForm()
 
     const onSubmit = async(data) => {
+        if (isBlocked) {
+            alert("Demasiados intentos fallidos. Por favor, inténtelo más tarde, o regístrese si no tiene una cuenta.");
+            return;
+        }
+
         try {
             await loginUser(data.email, data.password);
+            setAttempts(0);
             alert("Inicio de sesion exitoso");
             navigate("/")
         } catch (error) {
             setMessage("Porfavor, ingresa un correo y contrasena valido")
             console.error(error)
+            setAttempts(attempts + 1);
+            if (attempts + 1 >= 10) {
+                setIsBlocked(true);
+                setTimeout(() => setIsBlocked(false), 3 * 60 * 1000); // Desbloquear después de 3 minutos
+            }
         }
     }
     const handleGoogleSignIn = async () => {
@@ -49,25 +62,41 @@ const Login = () => {
                     Email
                 </label>
                 <input
-                    {...register("email", { required: true })}
+                    {...register("email", { 
+                        required: "El campo de email es obligatorio", // Mensaje de error personalizado
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "El email no es válido"
+                        }
+                    })}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email"
                     type="email"
-                    placeholder="Email Address"
+                    placeholder="Correo electrónico"
                   
                 />
+                {errors.email && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
+
             </div>
             <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                    Password
+                    Contraseña
                 </label>
                 <input
-                    {...register("password", { required: true })}
+                    {...register("password", { 
+                        required: "El campo de contraseña es obligatorio", // Mensaje de error personalizado
+                        minLength: {
+                            value: 6,
+                            message: "La contraseña debe tener al menos 6 caracteres"
+                        }
+                    })}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
-                    placeholder="Password"
+                    placeholder="Contraseña"
                 />
+                {errors.password && <p className="text-red-500 text-xs italic">{errors.password.message}</p>}
+
             </div>
 
             {
@@ -76,10 +105,13 @@ const Login = () => {
                 
             <div className="flex flex-wrap space-y-2.5 items-center justify-between">
                 <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit"
+                      className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+                        isBlocked ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      type="submit"
+                      disabled={isBlocked}
                 >
-                    Login
+                    {isBlocked ? "Bloqueado temporalmente" : "Iniciar Sesión"}
                 </button>
             </div>
         </form>

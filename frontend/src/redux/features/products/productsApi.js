@@ -51,9 +51,13 @@ const productsApi = createApi({
                 method: "DELETE"
             }),
             invalidatesTags: ["Products"]
+        }),
+        // Nuevo endpoint para búsqueda
+        searchProducts: builder.query({
+            query: (query) => `/search?query=${query}`, // Ruta de búsqueda
         })
     })
 })
 
-export const {useFetchAllProductsQuery, useFetchProductByIdQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation} = productsApi;
+export const {useFetchAllProductsQuery, useFetchProductByIdQuery, useAddProductMutation, useUpdateProductMutation, useDeleteProductMutation, useSearchProductsQuery} = productsApi;
 export default productsApi;
