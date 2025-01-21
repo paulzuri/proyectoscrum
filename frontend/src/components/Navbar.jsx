@@ -62,7 +62,7 @@ const Navbar = () => {
                         <ul className="absolute bg-white shadow-lg mt-2 w-full rounded-md">
                             {searchResults.map((product) => (
                                 <li key={product._id} className="p-2 border-b hover:bg-gray-100">
-                                    <Link to={`/product/${product._id}`}>{product.name}</Link>
+                                    <Link to={`/books/${product._id}`}>{product.title}</Link>
                                 </li>
                             ))}
                         </ul>
