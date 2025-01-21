@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FiShoppingCart } from "react-icons/fi"
 import { useParams } from "react-router-dom"
 
@@ -13,6 +13,10 @@ const SingleBook = () => {
     const { data: book, isLoading, isError } = useFetchProductByIdQuery(id);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
@@ -29,7 +33,7 @@ const SingleBook = () => {
                     <img
                         src={`${getImgUrl(book.coverImage)}`}
                         alt={book.title}
-                        className="mb-8 w-full"
+                        className="mb-8 w-3/4 mx-auto"
                     />
                 </div>
                 <div className="w-1/2 pl-5 flex flex-col items-center">
