@@ -29,7 +29,7 @@ const Login = () => {
         try {
             await loginUser(data.email, data.password);
             setAttempts(0);
-            alert("Inicio de sesion exitoso");
+            alert("¡Inicio de sesión exitoso! Bienvenido a Frizi.");
             navigate("/")
         } catch (error) {
             setMessage("Porfavor, ingresa un correo y contrasena valido")
@@ -44,13 +44,13 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
         try {
             await signInWithGoogle();
-            alert("Se ha iniciado sesion con google correctamente");
-            navigate("/")
+            alert("¡Inicio de sesión exitoso! Bienvenido a Frizi."); // Mensaje de bienvenida
+            navigate("/");
         } catch (error) {
-            alert("Inicio con google fallido")
-            console.error(error)
+            alert("El inicio de sesión con Google falló");
+            console.error(error);
         }
-    }
+    };
   return (
     
 <div className='h-[calc(100vh-120px)] flex items-center justify-center'>
