@@ -64,28 +64,45 @@ const Register = () => {
 
             <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                    Email
+                    Correo electrónico
                 </label>
                 <input
-                    {...register("email", { required: true })}
+                    {...register("email", { 
+                        required: "El campo de email es obligatorio", // Mensaje de error personalizado
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "El email no es válido"
+                        }
+                    })}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email"
                     type="email"
-                    placeholder="Email Address"
-                  
+                    placeholder="Correo electrónico"
                 />
+                {errors.email && (
+                <p className="text-red-500 text-xs italic mt-2">{errors.email.message}</p>
+                )}
             </div>
             <div className="mb-6">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                    Password
+                    Contraseña
                 </label>
                 <input
-                    {...register("password", { required: true })}
+                    {...register("password", { 
+                        required: "El campo de contraseña es obligatorio", // Mensaje de error personalizado
+                        minLength: {
+                            value: 6,
+                            message: "La contraseña debe tener al menos 6 caracteres"
+                        }
+                    })}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
-                    placeholder="Password"
+                    placeholder="Contraseña"
                 />
+                {errors.password && (
+                <p className="text-red-500 text-xs italic mt-2">{errors.password.message}</p>
+                )}
             </div>
 
             {
@@ -97,7 +114,7 @@ const Register = () => {
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     type="submit"
                 >
-                    Register
+                    Registrarse
                 </button>
             </div>
         </form>
@@ -115,7 +132,7 @@ const Register = () => {
             </button>
         </div>
         <p className="mt-5 text-center text-gray-500 text-xs">
-            &copy;2025 Book Store. All rights reserved.
+            &copy;2025 Frizi. Todos los derechos reservados.
         </p>
     </div>
 </div>
