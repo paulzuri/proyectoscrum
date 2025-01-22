@@ -16,9 +16,12 @@ import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
-import PaypalPayment from "../pages/books/PaypalPayment";
 
+import PaypalPayment from "../pages/books/PaypalPayment";
+import FinishSignUp from "../components/FinishSignUp";
 // import Paypal from "../pages/books/Paypal";
+
+
 
 
 const router = createBrowserRouter([
@@ -67,7 +70,6 @@ const router = createBrowserRouter([
         path: "/user-dashboard",
         element: <PrivateRoute><UserDashboard /></PrivateRoute>
       }
-
     ]
   },
   {
@@ -93,7 +95,15 @@ const router = createBrowserRouter([
       {
         path: "manage-books",
         element: <AdminRoute><ManageBooks /></AdminRoute>
-      }
+      },
+      {
+        path: "/user-dashboard",
+        element: <PrivateRoute><UserDashboard/></PrivateRoute>
+      },
+      {
+        path: "/FinishSignUp",
+        element:<FinishSignUp/>
+       }
     ]
   }
 ]);

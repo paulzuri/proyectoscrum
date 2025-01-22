@@ -4,9 +4,13 @@ import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 
 import avatarImg from "../assets/avatar.png"
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
+import axios from "axios"; // Para solicitudes HTTP
+import { useSearchProductsQuery } from "../redux/features/products/productsApi"; // Importa el hook
+
+
 
 const navigation = [
     { name: "Dashboard", href: "/user-dashboard" },
@@ -17,13 +21,22 @@ const navigation = [
 const Navbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState(""); // Manejar el término de búsqueda
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const cartItems = useSelector(state => state.cart.cartItems);
     console.log(cartItems)
+
+
     
     const {currentUser, logout} = useAuth();
     const handleLogOut = () => {
         logout()
-    }
+    };
+
+    // Manejador de búsqueda
+    const { data: searchResults = [], isFetching } = useSearchProductsQuery(searchQuery, {
+        skip: !searchQuery, // Solo realiza la consulta si hay un término de búsqueda
+    });
 
     return (
         <header className="max-w-screen-2xl mx-auto px-4 py-6">
@@ -37,17 +50,34 @@ const Navbar = () => {
 
                 {/* search input */}
                 <div className="relative sm:w-72 w-40 space-x-2">
-
                     <IoSearchOutline className="absolute inline-block left-3 inset-y-2" />
-
-                    <input type="text" placeholder="Buscar"
+                    <input
+                        type="text"
+                        placeholder="Buscar"
+                        value={searchQuery}
+                        onFocus={() => setIsDropdownVisible(true)} // Mostrar resultados al enfocar
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onBlur={() => setTimeout(() => setIsDropdownVisible(false), 200)} // Ocultar resultados después de un pequeño retraso
                         className="bg-[#EAEAEA] w-full py-1 md:px-8 px-6 rounded-md focus:outline-none"
                     />
+                    {isFetching && <p className="text-sm text-gray-500">Buscando...</p>}
+
+                    {/* Mostrar resultados de búsqueda */}
+                    {isDropdownVisible && Array.isArray(searchResults) && searchResults.length > 0 && (
+                        <ul className="absolute bg-white shadow-lg mt-2 w-full rounded-md">
+                            {searchResults.map((product) => (
+                                <li key={product._id} className="p-2 border-b hover:bg-gray-100">
+                                    <Link to={`/books/${product._id}`}>{product.title}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
 
 
-                {/* rigth side */}
-                <div className="relative flex items-center md:space-x-3 space-x-2">
+
+               {/* rigth side */}
+               <div className="relative flex items-center md:space-x-3 space-x-2">
                     <div >
                         {
                             currentUser ? <>
@@ -99,5 +129,4 @@ const Navbar = () => {
         </header>
     )
 }
-
 export default Navbar;
