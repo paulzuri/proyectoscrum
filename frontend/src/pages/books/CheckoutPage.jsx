@@ -7,6 +7,8 @@ import { useAuth } from '../../context/AuthContext';
 import Swal from 'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 
+import Paypal from './Paypal';
+
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
@@ -18,10 +20,14 @@ const CheckoutPage = () => {
         formState: { errors },
     } = useForm()
 
-    const [createOrder, {isLoading, error}] = useCreateOrderMutation();
-    const navigate =  useNavigate()
+    const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+    const navigate = useNavigate()
 
     const [isChecked, setIsChecked] = useState(false)
+
+
+
+
     const onSubmit = async (data) => {
 
         const newOrder = {
@@ -158,6 +164,8 @@ const CheckoutPage = () => {
                                                 type="text" name="zipcode" id="zipcode" className="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                         </div>
 
+
+
                                         <div className="md:col-span-5 mt-3">
                                             <div className="inline-flex items-center">
                                                 <input
@@ -167,7 +175,10 @@ const CheckoutPage = () => {
                                             </div>
                                         </div>
 
+                                        <div className="mt-4">
+                                            <Paypal totalPrice={totalPrice} />
 
+                                        </div>
 
                                         <div className="md:col-span-5 text-right">
                                             <div className="inline-flex items-end">
