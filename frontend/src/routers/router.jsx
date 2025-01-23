@@ -97,11 +97,11 @@ const router = createBrowserRouter([
         element: <AdminRoute><ManageBooks /></AdminRoute>
       },
       {
-        path: "/user-dashboard",
+        path: "user-dashboard",
         element: <PrivateRoute><UserDashboard/></PrivateRoute>
       },
       {
-        path: "/FinishSignUp",
+        path: "FinishSignUp",
         element:<FinishSignUp/>
        }
     ]

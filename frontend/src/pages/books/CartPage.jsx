@@ -119,6 +119,27 @@ const CartPage = () => {
                         <p>Total</p>
                         <p>${totalPrice}</p>
                     </div>
+                    <div className="mt-6">
+                        <Link
+                            to="/checkout"
+                            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                        >
+                            Pagar
+                        </Link>
+                    </div>
+                    <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                        <Link to="/">
+                            o
+                            <button
+                                type="button"
+
+                                className="font-medium text-indigo-600 hover:text-indigo-500 ml-1"
+                            >
+                                Continuar Comprando 
+                                <span aria-hidden="true"> &rarr;</span>
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </>
