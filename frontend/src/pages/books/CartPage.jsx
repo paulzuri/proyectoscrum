@@ -121,7 +121,9 @@ const CartPage = () => {
                         <p>Subtotal</p>
                         <p>${totalPrice}</p>
                     </div>
+
                     <p className="mt-0.5 text-sm text-gray-500">Sin IVA</p>
+
                     <div className="mt-6">
                         <Link
                             to="/checkout"
@@ -143,7 +145,7 @@ const CartPage = () => {
                             </button>
                         </Link>
                     </div>
-                </div>        
+                </div>
             </div>
         </>
     );

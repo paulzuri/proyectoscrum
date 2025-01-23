@@ -4,7 +4,7 @@ import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 
 import avatarImg from "../assets/avatar.png"
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios"; // Para solicitudes HTTP
@@ -22,8 +22,11 @@ const Navbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState(""); // Manejar el término de búsqueda
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const cartItems = useSelector(state => state.cart.cartItems);
     console.log(cartItems)
+
+
     
     const {currentUser, logout} = useAuth();
     const handleLogOut = () => {
@@ -52,13 +55,15 @@ const Navbar = () => {
                         type="text"
                         placeholder="Buscar"
                         value={searchQuery}
+                        onFocus={() => setIsDropdownVisible(true)} // Mostrar resultados al enfocar
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onBlur={() => setTimeout(() => setIsDropdownVisible(false), 200)} // Ocultar resultados después de un pequeño retraso
                         className="bg-[#EAEAEA] w-full py-1 md:px-8 px-6 rounded-md focus:outline-none"
                     />
                     {isFetching && <p className="text-sm text-gray-500">Buscando...</p>}
 
                     {/* Mostrar resultados de búsqueda */}
-                    {Array.isArray(searchResults) && searchResults.length > 0 && (
+                    {isDropdownVisible && Array.isArray(searchResults) && searchResults.length > 0 && (
                         <ul className="absolute bg-white shadow-lg mt-2 w-full rounded-md">
                             {searchResults.map((product) => (
                                 <li key={product._id} className="p-2 border-b hover:bg-gray-100">
@@ -71,8 +76,8 @@ const Navbar = () => {
 
 
 
-                {/* rigth side */}
-                <div className="relative flex items-center md:space-x-3 space-x-2">
+               {/* rigth side */}
+               <div className="relative flex items-center md:space-x-3 space-x-2">
                     <div >
                         {
                             currentUser ? <>
@@ -86,9 +91,9 @@ const Navbar = () => {
                                             <ul className="py-2">
                                                 {
                                                     navigation.map((item) => (
-                                                        <li key={item.title} onClick={() => setIsDropdownOpen(false)}>
+                                                        <li key={item.name} onClick={() => setIsDropdownOpen(false)}>
                                                             <Link to={item.href} className="block px-4 py-2 text-sm hover:bg-gray-100">
-                                                                {item.title}
+                                                                {item.name}
                                                             </Link>
                                                         </li>
                                                     ))
@@ -124,5 +129,4 @@ const Navbar = () => {
         </header>
     )
 }
-
 export default Navbar;
