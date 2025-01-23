@@ -25,7 +25,10 @@ const CheckoutPage = () => {
 
     const [isChecked, setIsChecked] = useState(false)
 
-
+    const handleSuccessfulPayment = async () => {
+        const data = watch(); // Obtiene los datos del formulario actuales
+        await onSubmit(data);
+    };
 
 
     const onSubmit = async (data) => {
@@ -175,21 +178,30 @@ const CheckoutPage = () => {
                                             </div>
                                         </div>
 
-                                        <div className="mt-4">
-                                            <Paypal totalPrice={totalPrice} />
 
-                                        </div>
 
-                                        <div className="md:col-span-5 text-right">
-                                            <div className="inline-flex items-end">
-                                                <button
-                                                    disabled={!isChecked}
-                                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
-                                            </div>
-                                        </div>
+
 
                                     </div>
                                 </div>
+
+                                <div className="text-gray-600">
+                                    <p className="font-medium text-lg">Finalizar con la Compra</p>
+                                </div>
+                                <div className="mt-4">
+                                    <Paypal
+                                        totalPrice={totalPrice}
+                                        onSuccessfulPayment={handleSuccessfulPayment}
+                                    />
+                                </div>
+
+                                {/* <div className="md:col-span-5 text-right">
+                                    <div className="inline-flex items-end">
+                                        <button
+                                            disabled={!isChecked}
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
+                                    </div>
+                                </div> */}
                             </form>
                         </div>
 
