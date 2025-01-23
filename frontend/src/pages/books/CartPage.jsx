@@ -70,7 +70,8 @@ const CartPage = () => {
                                             <div>
                                                 <div className="flex flex-wrap justify-between text-base font-medium text-gray-900">
                                                     <h3>
-                                                        <Link to={`/products/${product._id}`}>{product.title}</Link>
+                                                        <Link to={`/books/${product._id}`}>{product.title}</Link>
+                                                        <h3 className="text-sm text-gray-500">{product.description}</h3>
                                                     </h3>
                                                     <p className="sm:ml-4">${(product.newPrice * product.quantity).toFixed(2)}</p>
                                                 </div>
@@ -114,11 +115,15 @@ const CartPage = () => {
                         )}
                     </div>
                 </div>
-                <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+
+                <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Total</p>
+                        <p>Subtotal</p>
                         <p>${totalPrice}</p>
                     </div>
+
+                    <p className="mt-0.5 text-sm text-gray-500">Sin IVA</p>
+
                     <div className="mt-6">
                         <Link
                             to="/checkout"
