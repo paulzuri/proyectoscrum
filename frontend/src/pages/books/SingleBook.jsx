@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FiShoppingCart } from "react-icons/fi"
 import { useParams } from "react-router-dom"
 
@@ -12,14 +12,27 @@ const SingleBook = () => {
     const { data: book, isLoading, isError } = useFetchProductByIdQuery(id);
 
     const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     const handleAddToCart = (product) => {
-        dispatch(addToCart(product))
+        dispatch(addToCart({ product, quantity }));
     }
+
+    const handleInputChange = (e) => {
+        let value = Number(e.target.value);
+        if (e.target.value === '') {
+            value = 1;
+        } else if (value < 1) {
+            value = 1;
+        } else if (value > book.stock) {
+            value = book.stock;
+        }
+        setQuantity(value);
+    };
 
     if (isLoading) return <div>Cargando...</div>
     if (isError) return <div>Error al cargar detalles del producto</div>
@@ -53,10 +66,25 @@ const SingleBook = () => {
                         </p>
                     </div>
 
+                    <div className="mb-4">
+                        <label htmlFor="quantity" className="block text-gray-700 text-sm font-bold mb-2">
+                            Cantidad:
+                        </label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            value={quantity}
+                            onChange={handleInputChange}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            min="1"
+                            max={book?.stock}
+                        />
+                    </div>
+
                     <button onClick={() => handleAddToCart(book)} className="btn-primary px-6 space-x-1 flex items-center gap-1">
                         <FiShoppingCart className="" />
                         <span>Comprar</span>
-
                     </button>
                 </div>
             </div>
