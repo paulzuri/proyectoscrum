@@ -16,7 +16,8 @@ import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
-import FinishSignUp from "../components/FinishSignUp";
+import ForgotPassword from "../components/ForgotPsswd";
+import ChangePassword from "../components/ChangePassword";
 
 
 const router = createBrowserRouter([
@@ -62,10 +63,15 @@ const router = createBrowserRouter([
               element: <PrivateRoute><UserDashboard/></PrivateRoute>
             },
             {
-            path: "/FinishSignUp",
-            element:<FinishSignUp/>
+              path: "/forgot-password",
+              element: <ForgotPassword/>
+            },
+            {
+              path: "/change-password",
+              element: <PrivateRoute><ChangePassword/></PrivateRoute>
             }
-
+            
+            
         ]
     },
     {

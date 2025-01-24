@@ -119,6 +119,10 @@ const Login = () => {
             No tienes una cuenta? Por favor 
             <Link to="/register" className='text-blue-500 hover:text-blue-800'> Registrate</Link>
         </p>
+        <p className="inline-block align-baseline font-medium mt-4 text-sm">
+            Olvidaste tu contraseña? Por favor 
+            <Link to="/forgot-password" className='text-blue-500 hover:text-blue-800'> Recupera tu contraseña</Link>
+        </p>
         <div className="mt-4">
             <button
                 className="w-full flex flex-wrap gap-1 items-center justify-center bg-secondary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

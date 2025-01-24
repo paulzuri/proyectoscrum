@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { useGetOrderByEmailQuery } from '../../../redux/features/orders/ordersApi';
+import { Link } from 'react-router-dom';
 
 const UserDashboard = () => {
     const { currentUser } = useAuth();
@@ -35,6 +36,13 @@ const UserDashboard = () => {
                     ) : (
                         <p className="text-gray-600">No tienes ordenes recientes.</p>
                     )}
+                </div>
+                    <p className="inline-block align-baseline font-medium mt-4 text-sm">
+                        Quieres cambiar de contraseña?
+                        <Link to="/change-password" className='text-blue-500 hover:text-blue-800'> Cambiala Aqui</Link>
+                    </p>
+                <div>
+
                 </div>
             </div>
         </div>
