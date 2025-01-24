@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,8 +7,11 @@ import { useAuth } from '../../context/AuthContext';
 import Swal from 'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 
+import Paypal from './Paypal';
+
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
+
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
     const { currentUser } = useAuth()
     const {
@@ -18,10 +21,38 @@ const CheckoutPage = () => {
         formState: { errors },
     } = useForm()
 
-    const [createOrder, {isLoading, error}] = useCreateOrderMutation();
-    const navigate =  useNavigate()
+    const [createOrder, { isLoading, error }] = useCreateOrderMutation();
+    const navigate = useNavigate()
 
     const [isChecked, setIsChecked] = useState(false)
+    const [isFormValid, setIsFormValid] = useState(false); // Estado de validación del formulario
+
+    useEffect(() => {
+        const data = watch();
+        const requiredFields = ['name', 'phone', 'address', 'city', 'country', 'state', 'zipcode'];
+        const allFieldsFilled = requiredFields.every(field => data[field]?.trim() !== '');
+        setIsFormValid(allFieldsFilled && isChecked);
+    }, [watch(), isChecked]);
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            navigate("/cart");
+        }
+    }, [cartItems, navigate]);
+    
+
+
+    const handleCheckboxChange = (e) => {
+        setIsChecked(e.target.checked);
+        // validateForm(); // Revalidar el formulario cuando cambie el estado del checkbox
+    };
+
+    const handleSuccessfulPayment = async () => {
+        const data = watch(); // Obtiene los datos del formulario actuales
+        await onSubmit(data);
+    };
+
+
     const onSubmit = async (data) => {
 
         const newOrder = {
@@ -70,7 +101,9 @@ const CheckoutPage = () => {
 
 
                         <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 my-8">
+                            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 my-8"
+                            // onChange={validateForm}
+                            >
                                 <div className="text-gray-600">
                                     <p className="font-medium text-lg">Personal Details</p>
                                     <p>Please fill out all the fields.</p>
@@ -158,6 +191,8 @@ const CheckoutPage = () => {
                                                 type="text" name="zipcode" id="zipcode" className="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                         </div>
 
+
+
                                         <div className="md:col-span-5 mt-3">
                                             <div className="inline-flex items-center">
                                                 <input
@@ -169,16 +204,29 @@ const CheckoutPage = () => {
 
 
 
-                                        <div className="md:col-span-5 text-right">
-                                            <div className="inline-flex items-end">
-                                                <button
-                                                    disabled={!isChecked}
-                                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
-                                            </div>
-                                        </div>
+
 
                                     </div>
                                 </div>
+
+                                <div className="text-gray-600">
+                                    <p className="font-medium text-lg">Finalizar con la Compra</p>
+                                </div>
+                                <div className="mt-4">
+                                    <Paypal
+                                        totalPrice={totalPrice}
+                                        onSuccessfulPayment={handleSubmit(onSubmit)}
+                                        disabled={!isFormValid} // Deshabilitar botón si no es válido
+                                    />
+                                </div>
+
+                                {/* <div className="md:col-span-5 text-right">
+                                    <div className="inline-flex items-end">
+                                        <button
+                                            disabled={!isChecked}
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
+                                    </div>
+                                </div> */}
                             </form>
                         </div>
 

@@ -70,7 +70,8 @@ const CartPage = () => {
                                             <div>
                                                 <div className="flex flex-wrap justify-between text-base font-medium text-gray-900">
                                                     <h3>
-                                                        <Link to={`/products/${product._id}`}>{product.title}</Link>
+                                                        <Link to={`/books/${product._id}`}>{product.title}</Link>
+                                                        <h3 className="text-sm text-gray-500">{product.description}</h3>
                                                     </h3>
                                                     <p className="sm:ml-4">${(product.newPrice * product.quantity).toFixed(2)}</p>
                                                 </div>
@@ -114,10 +115,44 @@ const CartPage = () => {
                         )}
                     </div>
                 </div>
-                <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
+
+                <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Total</p>
+                        <p>Subtotal</p>
                         <p>${totalPrice}</p>
+                    </div>
+
+                    <p className="mt-0.5 text-sm text-gray-500">Sin IVA</p>
+
+                    <div className="mt-6">
+                        {/* Condicional para deshabilitar el enlace si el carrito está vacío */}
+                        {cartItems.length === 0 ? (
+                            <span
+                                className="flex items-center justify-center rounded-md border border-transparent bg-gray-400 px-6 py-3 text-base font-medium text-white cursor-not-allowed"
+                            >
+                                Pagar
+                            </span>
+                        ) : (
+                            <Link
+                                to="/checkout"
+                                className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                            >
+                                Pagar
+                            </Link>
+                        )}
+                    </div>
+                    <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                        <Link to="/">
+                            o
+                            <button
+                                type="button"
+
+                                className="font-medium text-indigo-600 hover:text-indigo-500 ml-1"
+                            >
+                                Continuar Comprando
+                                <span aria-hidden="true"> &rarr;</span>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -16,90 +16,104 @@ import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
+import PaypalPayment from "../pages/books/PaypalPayment";
+import FinishSignUp from "../components/FinishSignUp";
+// import Paypal from "../pages/books/Paypal";
 import ForgotPassword from "../components/ForgotPsswd";
 import ChangePassword from "../components/ChangePassword";
 
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
         path: "/",
-        element: <App/>,
-        children: [
-            {
-                path: "/",
-                element: <Home/>,
-            },
-            {
-                path: "/orders",
-                element: <PrivateRoute><OrderPage/></PrivateRoute>
-            },
-            {
-                path: "/about",
-                element: <div>About</div>,
-            },
-            {
-                path: "/login",
-                element: <Login/>
-            },
-            {
-                path: "/register",
-                element: <Register/>
-            },
-            {
-                path: "/cart",
-                element: <CartPage/>
-            },
-            {
-                path: "/checkout",
-                element: <PrivateRoute><CheckoutPage/></PrivateRoute>
-            },
-            {
-                path: "/books/:id",
-                element: <SingleBook/>
+        element: <Home />,
+      },
+      {
+        path: "/orders",
+        element: <PrivateRoute><OrderPage /></PrivateRoute>
+      },
+      {
+        path: "/about",
+        element: <div>About</div>,
+      },
+      {
+        path: "/paypal",
+        element: <PrivateRoute><PaypalPayment /></PrivateRoute>
+      },
+      {
+        path: "/login",
+        element: <Login />
+      },
+      {
+        path: "/register",
+        element: <Register />
+      },
+      {
+        path: "/cart",
+        element: <CartPage />
+      },
+      {
+        path: "/checkout",
+        element: <PrivateRoute><CheckoutPage /></PrivateRoute>
+      },
+      {
+        path: "/books/:id",
+        element: <SingleBook />
 
-            },
-            {
-              path: "/user-dashboard",
-              element: <PrivateRoute><UserDashboard/></PrivateRoute>
-            },
-            {
-              path: "/forgot-password",
-              element: <ForgotPassword/>
-            },
-            {
-              path: "/change-password",
-              element: <PrivateRoute><ChangePassword/></PrivateRoute>
-            }
-            
-            
-        ]
-    },
-    {
-      path: "/admin",
-      element: <AdminLogin/>
-    },
-    {
-        path: "/dashboard",
-        element: <AdminRoute><DashboardLayout/></AdminRoute>,
-        children:[
-          {
-            path: "",
-            element: <AdminRoute><Dashboard/></AdminRoute>
-          },
-          {
-            path: "add-new-book",
-            element: <AdminRoute> <AddBook/> </AdminRoute>
-          },
-          {
-            path: "edit-book/:id",
-            element: <AdminRoute><UpdateBook/></AdminRoute>
-          },
-          {
-            path: "manage-books",
-            element: <AdminRoute><ManageBooks/></AdminRoute>
-          }
-        ]
+      },
+      {
+        path: "/user-dashboard",
+        element: <PrivateRoute><UserDashboard /></PrivateRoute>
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword/>
+      },
+      {
+        path: "/change-password",
+        element: <PrivateRoute><ChangePassword/></PrivateRoute>
       }
+    ]
+    
+  },
+  {
+    path: "/admin",
+    element: <AdminLogin />
+  },
+  {
+    path: "/dashboard",
+    element: <AdminRoute><DashboardLayout /></AdminRoute>,
+    children: [
+      {
+        path: "",
+        element: <AdminRoute><Dashboard /></AdminRoute>
+      },
+      {
+        path: "add-new-book",
+        element: <AdminRoute> <AddBook /> </AdminRoute>
+      },
+      {
+        path: "edit-book/:id",
+        element: <AdminRoute><UpdateBook /></AdminRoute>
+      },
+      {
+        path: "manage-books",
+        element: <AdminRoute><ManageBooks /></AdminRoute>
+      },
+      {
+        path: "user-dashboard",
+        element: <PrivateRoute><UserDashboard/></PrivateRoute>
+      },
+      {
+        path: "FinishSignUp",
+        element:<FinishSignUp/>
+       }
+    ]
+  }
 ]);
 
 export default router;
