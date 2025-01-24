@@ -125,12 +125,21 @@ const CartPage = () => {
                     <p className="mt-0.5 text-sm text-gray-500">Sin IVA</p>
 
                     <div className="mt-6">
-                        <Link
-                            to="/checkout"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                        >
-                            Pagar
-                        </Link>
+                        {/* Condicional para deshabilitar el enlace si el carrito está vacío */}
+                        {cartItems.length === 0 ? (
+                            <span
+                                className="flex items-center justify-center rounded-md border border-transparent bg-gray-400 px-6 py-3 text-base font-medium text-white cursor-not-allowed"
+                            >
+                                Pagar
+                            </span>
+                        ) : (
+                            <Link
+                                to="/checkout"
+                                className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                            >
+                                Pagar
+                            </Link>
+                        )}
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <Link to="/">
@@ -140,7 +149,7 @@ const CartPage = () => {
 
                                 className="font-medium text-indigo-600 hover:text-indigo-500 ml-1"
                             >
-                                Continuar Comprando 
+                                Continuar Comprando
                                 <span aria-hidden="true"> &rarr;</span>
                             </button>
                         </Link>
