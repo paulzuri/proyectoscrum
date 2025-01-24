@@ -16,12 +16,11 @@ import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
-
 import PaypalPayment from "../pages/books/PaypalPayment";
 import FinishSignUp from "../components/FinishSignUp";
 // import Paypal from "../pages/books/Paypal";
-
-
+import ForgotPassword from "../components/ForgotPsswd";
+import ChangePassword from "../components/ChangePassword";
 
 
 const router = createBrowserRouter([
@@ -69,8 +68,17 @@ const router = createBrowserRouter([
       {
         path: "/user-dashboard",
         element: <PrivateRoute><UserDashboard /></PrivateRoute>
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword/>
+      },
+      {
+        path: "/change-password",
+        element: <PrivateRoute><ChangePassword/></PrivateRoute>
       }
     ]
+    
   },
   {
     path: "/admin",
