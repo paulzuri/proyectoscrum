@@ -34,6 +34,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "FinishSignUp",
+        element: <FinishSignUp />
+      },
+      {
         path: "/orders",
         element: <PrivateRoute><OrderPage /></PrivateRoute>
       },
@@ -98,12 +102,9 @@ const router = createBrowserRouter([
       },
       {
         path: "user-dashboard",
-        element: <PrivateRoute><UserDashboard/></PrivateRoute>
-      },
-      {
-        path: "FinishSignUp",
-        element:<FinishSignUp/>
-       }
+        element: <PrivateRoute><UserDashboard /></PrivateRoute>
+      }
+
     ]
   }
 ]);
