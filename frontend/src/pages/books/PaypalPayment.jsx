@@ -1,7 +1,7 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import getBaseUrl from "../../utils/baseURL";
 
-const PaypalPayment = ({ totalPrice, onSuccessfulPayment }) => {
+const PaypalPayment = ({ totalPrice, onSuccessfulPayment, disabled }) => {
     const createOrder = () => {
         return fetch(`${getBaseUrl()}/api/paypal/orders`, {
             method: "POST",
@@ -45,14 +45,12 @@ const PaypalPayment = ({ totalPrice, onSuccessfulPayment }) => {
                 alert("Hubo un error al capturar el pago. Inténtelo más tarde.");
             });
     };
+
     return (
-        <
-            PayPalButtons createOrder={
-                (data, actions) => createOrder(data, actions)
-            }
-            onApprove={
-                (data, actions) => onApprove(data, actions)
-            }
+        <PayPalButtons 
+            createOrder={createOrder}
+            onApprove={onApprove}
+            disabled={disabled} // Aquí se pasa el estado disabled
         />
     );
 }

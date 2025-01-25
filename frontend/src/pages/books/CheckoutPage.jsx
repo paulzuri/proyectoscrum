@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import Paypal from './Paypal';
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice * item.quantity, 0).toFixed(2);
+
     const { currentUser } = useAuth()
     const {
         register,
@@ -24,6 +25,27 @@ const CheckoutPage = () => {
     const navigate = useNavigate()
 
     const [isChecked, setIsChecked] = useState(false)
+    const [isFormValid, setIsFormValid] = useState(false); // Estado de validación del formulario
+
+    useEffect(() => {
+        const data = watch();
+        const requiredFields = ['name', 'phone', 'address', 'city', 'country', 'state', 'zipcode'];
+        const allFieldsFilled = requiredFields.every(field => data[field]?.trim() !== '');
+        setIsFormValid(allFieldsFilled && isChecked);
+    }, [watch(), isChecked]);
+
+    useEffect(() => {
+        if (cartItems.length === 0) {
+            navigate("/cart");
+        }
+    }, [cartItems, navigate]);
+    
+
+
+    const handleCheckboxChange = (e) => {
+        setIsChecked(e.target.checked);
+        // validateForm(); // Revalidar el formulario cuando cambie el estado del checkbox
+    };
 
     const handleSuccessfulPayment = async () => {
         const data = watch(); // Obtiene los datos del formulario actuales
@@ -79,7 +101,9 @@ const CheckoutPage = () => {
 
 
                         <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 my-8">
+                            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 my-8"
+                            // onChange={validateForm}
+                            >
                                 <div className="text-gray-600">
                                     <p className="font-medium text-lg">Personal Details</p>
                                     <p>Please fill out all the fields.</p>
@@ -191,7 +215,8 @@ const CheckoutPage = () => {
                                 <div className="mt-4">
                                     <Paypal
                                         totalPrice={totalPrice}
-                                        onSuccessfulPayment={handleSuccessfulPayment}
+                                        onSuccessfulPayment={handleSubmit(onSubmit)}
+                                        disabled={!isFormValid} // Deshabilitar botón si no es válido
                                     />
                                 </div>
 

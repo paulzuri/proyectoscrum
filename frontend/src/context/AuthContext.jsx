@@ -3,11 +3,13 @@ import { auth } from "../firebase/firebase.config";
 import { 
     createUserWithEmailAndPassword, 
     sendSignInLinkToEmail, 
+    sendPasswordResetEmail,
     GoogleAuthProvider, 
     onAuthStateChanged, 
     signInWithEmailAndPassword, 
     signInWithPopup, 
-    signOut 
+    signOut, 
+    updatePassword
 } from "firebase/auth";
 
 const AuthContext =  createContext();
@@ -71,10 +73,38 @@ export const AuthProvide = ({children}) => {
         return await signInWithPopup(auth, googleProvider)
     }
 
-    // logout the user
-    const logout = () => {
-        return signOut(auth)
-    }
+    // Cerrar sesión
+    const logout = async () => {
+        try {
+            return await signOut(auth);
+        } catch (error) {
+            throw new Error("Error al cerrar sesión. Intenta nuevamente.");
+        }
+    };
+
+    // Recuperar contraseña
+    const resetPassword = async (email) => {
+        try {
+            await sendPasswordResetEmail(auth, email);
+            return "Se envió un enlace de recuperación a tu correo.";
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    };
+
+    // Cambio    contraseña
+    const changePassword = async (newPassword) => {
+        const user = auth.currentUser;
+      
+        if (!user) throw new Error("Usuario no autenticado.");
+      
+        try {
+          await updatePassword(user, newPassword);
+          return "Contraseña actualizada exitosamente.";
+        } catch (error) {
+          throw new Error(error.message);
+        }
+      };
 
     // manage user
     useEffect(() => {
@@ -94,7 +124,6 @@ export const AuthProvide = ({children}) => {
         return () => unsubscribe();
     }, [])
 
-
     const value = {
         currentUser,
         loading,
@@ -102,6 +131,8 @@ export const AuthProvide = ({children}) => {
         loginUser,
         signInWithGoogle,
         logout,
+        resetPassword,
+        changePassword,
     };
 
     return (
