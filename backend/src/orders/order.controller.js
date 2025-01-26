@@ -13,20 +13,21 @@ const createAOrder = async (req, res) => {
 
 const getOrderByEmail = async (req, res) => {
   try {
-    const { email } = req.params;
-    const orders = await Order.find({ email })
-      .sort({ createdAt: -1 })
-      .populate('productIds', 'title'); // Solo trae el campo "title" de los productos.
+      const { email } = req.params;
+      const orders = await Order.find({ email })
+          .sort({ createdAt: -1 })
+          .populate('products.productId', 'title'); // Solo trae el campo "title".
 
-    if (!orders) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-    res.status(200).json(orders);
+      if (!orders) {
+          return res.status(404).json({ message: "Order not found" });
+      }
+      res.status(200).json(orders);
   } catch (error) {
-    console.error("Error fetching orders", error);
-    res.status(500).json({ message: "Failed to fetch order" });
+      console.error("Error fetching orders", error);
+      res.status(500).json({ message: "Failed to fetch order" });
   }
 };
+
 
 
 module.exports = {
