@@ -62,13 +62,13 @@ const CheckoutPage = () => {
                 city: data.city,
                 country: data.country,
                 state: data.state,
-                zipcode: data.zipcode
-
+                zipcode: data.zipcode,
             },
             phone: data.phone,
-            productIds: cartItems.map(item => item?._id),
+            products: cartItems.map(item => ({ productId: item._id, quantity: item.quantity })),
             totalPrice: totalPrice,
         }
+        
         try {
             await createOrder(newOrder).unwrap();
             Swal.fire({

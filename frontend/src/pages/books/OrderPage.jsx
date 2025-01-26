@@ -27,8 +27,10 @@ const OrderPage = () => {
                                 <p> {order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}</p>
                                 <h3 className="font-semibold mt-2">Productos:</h3>
                                 <ul>
-                                    {order.productIds.map((product) => (
-                                        <li key={product._id}>{product.title}</li>
+                                    {order.products.map(({ productId, quantity }) => (
+                                        <li key={productId._id}>
+                                            {productId.title} - {quantity} unidad(es)
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
