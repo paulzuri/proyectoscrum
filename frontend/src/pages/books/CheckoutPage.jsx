@@ -36,16 +36,19 @@ const CheckoutPage = () => {
         setIsChecked(e.target.checked);
     };
 
-    const handleSuccessfulPayment = async () => {
-        const data = watch();
-        await onSubmit(data);
+    const getBaseUrl = () => {
+        return import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+    };
 
+    const reduceStock = async () => {
         for (const item of cartItems) {
             try {
-                await axios.post(`${getBaseUrl()}/api/products/reduce-stock`, {
+                console.log(`Reducing stock for product ID: ${item._id}, Quantity: ${item.quantity}`);
+                const response = await axios.post(`${getBaseUrl()}/api/products/reduce-stock`, {
                     id: item._id,
                     quantity: item.quantity
                 });
+                console.log('Stock reduced:', response.data);
             } catch (error) {
                 console.error('Error reducing stock:', error);
                 if (error.response && error.response.data.message === "Insufficient stock") {
@@ -63,12 +66,20 @@ const CheckoutPage = () => {
                         confirmButtonText: "OK"
                     });
                 }
-                return; // Exit the function if there's an error
+                return false; // Return false if there's an error
             }
         }
+        return true; // Return true if stock reduction is successful
     };
 
-    const onSubmit = async (data) => {
+    const handleSuccessfulPayment = async () => {
+        // Reduce stock before creating the order
+        const stockReduced = await reduceStock();
+        if (!stockReduced) {
+            return; // Exit if stock reduction failed
+        }
+
+        const data = watch();
         const newOrder = {
             name: data.name,
             email: currentUser?.email,
@@ -84,7 +95,9 @@ const CheckoutPage = () => {
         };
 
         try {
-            await createOrder(newOrder).unwrap();
+            console.log("Creating order with data:", newOrder);
+            const response = await createOrder(newOrder).unwrap();
+            console.log("Order created successfully:", response);
             Swal.fire({
                 title: "Confirmed Order",
                 text: "Your order placed successfully!",
@@ -101,6 +114,10 @@ const CheckoutPage = () => {
                 confirmButtonText: "OK"
             });
         }
+    };
+
+    const onSubmit = async (data) => {
+        await handleSuccessfulPayment();
     };
 
     return (
@@ -209,10 +226,13 @@ const CheckoutPage = () => {
                                 <div className="mt-4">
                                     <Paypal
                                         totalPrice={totalPrice}
-                                        onSuccessfulPayment={handleSubmit(onSubmit)}
+                                        onSuccessfulPayment={handleSuccessfulPayment}
                                         disabled={!isFormValid}
                                     />
                                 </div>
+                            </form>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <button type="submit" disabled={!isFormValid}>Place Order</button>
                             </form>
                         </div>
                     </div>
