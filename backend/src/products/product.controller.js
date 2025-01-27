@@ -75,33 +75,29 @@ const deleteAProduct = async (req, res) => {
 
 const reduceStock = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { quantity } = req.body;
-
-        if (quantity <= 0) {
-            return res.status(400).send({ message: "Stock no puede ser menor a 0" });
-        }
-
+        const { id, quantity } = req.body;
         const product = await Product.findById(id);
+
         if (!product) {
-            return res.status(404).send({ message: "Producto no encontrado" });
+            return res.status(404).send({ message: "Product not found" });
         }
 
-        if (product.stock >= quantity) {
-            product.stock -= quantity;
-            await product.save();
-            res.status(200).send({ 
-                message: `Stock reducido en ${quantity}`,
-                product
-            });
-        } else {
-            res.status(400).send({ message: "Stock insuficiente" });
+        if (product.stock < quantity) {
+            return res.status(400).send({ message: "Insufficient stock" });
         }
+
+        product.stock -= quantity;
+        await product.save();
+
+        res.status(200).send({
+            message: "Stock reduced successfully",
+            product
+        });
     } catch (error) {
         console.error("Error reducing stock", error);
         res.status(500).send({ message: "Failed to reduce stock" });
     }
-}
+};
 
 module.exports = {
     postAProduct,

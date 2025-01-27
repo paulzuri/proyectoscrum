@@ -1,31 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
 import Swal from 'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
-
 import Paypal from './Paypal';
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice * item.quantity, 0).toFixed(2);
 
-    const { currentUser } = useAuth()
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm()
-
+    const { currentUser } = useAuth();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [createOrder, { isLoading, error }] = useCreateOrderMutation();
-    const navigate = useNavigate()
-
-    const [isChecked, setIsChecked] = useState(false)
-    const [isFormValid, setIsFormValid] = useState(false); // Estado de validación del formulario
+    const navigate = useNavigate();
+    const [isChecked, setIsChecked] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
         const data = watch();
@@ -40,21 +32,43 @@ const CheckoutPage = () => {
         }
     }, [cartItems, navigate]);
 
-
-
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
-        // validateForm(); // Revalidar el formulario cuando cambie el estado del checkbox
     };
 
     const handleSuccessfulPayment = async () => {
-        const data = watch(); // Obtiene los datos del formulario actuales
+        const data = watch();
         await onSubmit(data);
+
+        for (const item of cartItems) {
+            try {
+                await axios.post(`${getBaseUrl()}/api/products/reduce-stock`, {
+                    id: item._id,
+                    quantity: item.quantity
+                });
+            } catch (error) {
+                console.error('Error reducing stock:', error);
+                if (error.response && error.response.data.message === "Insufficient stock") {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Insufficient stock, try again later.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to reduce stock for some items.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+                return; // Exit the function if there's an error
+            }
+        }
     };
 
-
     const onSubmit = async (data) => {
-
         const newOrder = {
             name: data.name,
             email: currentUser?.email,
@@ -67,26 +81,27 @@ const CheckoutPage = () => {
             phone: data.phone,
             products: cartItems.map(item => ({ productId: item._id, quantity: item.quantity })),
             totalPrice: totalPrice,
-        }
-        
+        };
+
         try {
             await createOrder(newOrder).unwrap();
             Swal.fire({
                 title: "Confirmed Order",
                 text: "Your order placed successfully!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, It's Okay!"
+                icon: "success",
+                confirmButtonText: "OK"
             });
-            navigate("/orders")
+            navigate("/orders");
         } catch (error) {
-            console.error("Error place an order", error);
-            alert("Failed to place an order")
+            console.error("Error placing an order", error);
+            Swal.fire({
+                title: "Error",
+                text: "Failed to place an order.",
+                icon: "error",
+                confirmButtonText: "OK"
+            });
         }
-
-    }
+    };
 
     return (
         <section>
@@ -94,22 +109,16 @@ const CheckoutPage = () => {
                 <div className="container max-w-screen-lg mx-auto">
                     <div>
                         <div>
-                            <h2 className="font-semibold text-xl text-gray-600 mb-2">Cash On Delevary</h2>
+                            <h2 className="font-semibold text-xl text-gray-600 mb-2">Cash On Delivery</h2>
                             <p className="text-gray-500 mb-2">Total Price: ${totalPrice}</p>
                             <p className="text-gray-500 mb-6">Items: {cartItems.reduce((total, item) => total + item.quantity, 0)}</p>
-
                         </div>
-
-
                         <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 my-8"
-                            // onChange={validateForm}
-                            >
+                            <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3 my-8">
                                 <div className="text-gray-600">
                                     <p className="font-medium text-lg">Personal Details</p>
                                     <p>Please fill out all the fields.</p>
                                 </div>
-
                                 <div className="lg:col-span-2">
                                     <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                         <div className="md:col-span-5">
@@ -118,11 +127,9 @@ const CheckoutPage = () => {
                                                 {...register("name", { required: true })}
                                                 type="text" name="name" id="name" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
                                         </div>
-
                                         <div className="md:col-span-5">
                                             <label html="email">Email Address</label>
                                             <input
-
                                                 type="text" name="email" id="email" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                                 disabled
                                                 defaultValue={currentUser?.email}
@@ -134,21 +141,18 @@ const CheckoutPage = () => {
                                                 {...register("phone", { required: true })}
                                                 type="number" name="phone" id="phone" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="+123 456 7890" />
                                         </div>
-
                                         <div className="md:col-span-3">
                                             <label htmlFor="address">Address / Street</label>
                                             <input
                                                 {...register("address", { required: true })}
                                                 type="text" name="address" id="address" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                         </div>
-
                                         <div className="md:col-span-2">
                                             <label htmlFor="city">City</label>
                                             <input
                                                 {...register("city", { required: true })}
                                                 type="text" name="city" id="city" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                         </div>
-
                                         <div className="md:col-span-2">
                                             <label htmlFor="country">Country / region</label>
                                             <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
@@ -166,7 +170,6 @@ const CheckoutPage = () => {
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div className="md:col-span-2">
                                             <label htmlFor="state">State / province</label>
                                             <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
@@ -184,62 +187,39 @@ const CheckoutPage = () => {
                                                 </button>
                                             </div>
                                         </div>
-
                                         <div className="md:col-span-1">
                                             <label htmlFor="zipcode">Zipcode</label>
                                             <input
                                                 {...register("zipcode", { required: true })}
                                                 type="text" name="zipcode" id="zipcode" className="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                         </div>
-
-
-
                                         <div className="md:col-span-5 mt-3">
                                             <div className="inline-flex items-center">
                                                 <input
                                                     onChange={(e) => setIsChecked(e.target.checked)}
                                                     type="checkbox" name="billing_same" id="billing_same" className="form-checkbox" />
-                                                <label htmlFor="billing_same" className="ml-2 ">I am aggree to the <Link className='underline underline-offset-2 text-blue-600'>Terms & Conditions</Link> and <Link className='underline underline-offset-2 text-blue-600'>Shoping Policy.</Link></label>
+                                                <label htmlFor="billing_same" className="ml-2 ">I agree to the <Link className='underline underline-offset-2 text-blue-600'>Terms & Conditions</Link> and <Link className='underline underline-offset-2 text-blue-600'>Shopping Policy.</Link></label>
                                             </div>
                                         </div>
-
-
-
-
-
                                     </div>
                                 </div>
-
                                 <div className="text-gray-600">
-                                    <p className="font-medium text-lg">Finalizar con la Compra</p>
+                                    <p className="font-medium text-lg">Finalize Purchase</p>
                                 </div>
                                 <div className="mt-4">
                                     <Paypal
                                         totalPrice={totalPrice}
                                         onSuccessfulPayment={handleSubmit(onSubmit)}
-                                        disabled={!isFormValid} // Deshabilitar botón si no es válido
+                                        disabled={!isFormValid}
                                     />
                                 </div>
-
-                                {/* <div className="md:col-span-5 text-right">
-                                    <div className="inline-flex items-end">
-                                        <button
-                                            disabled={!isChecked}
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
-                                    </div>
-                                </div> */}
                             </form>
                         </div>
-
-
-
                     </div>
-
-
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default CheckoutPage
+export default CheckoutPage;
