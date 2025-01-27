@@ -48,12 +48,22 @@ const CheckoutPage = () => {
                 });
             } catch (error) {
                 console.error('Error reducing stock:', error);
-                Swal.fire({
-                    title: "Error",
-                    text: "Failed to reduce stock for some items.",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                });
+                if (error.response && error.response.data.message === "Insufficient stock") {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Insufficient stock, try again later.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Failed to reduce stock for some items.",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+                return; // Exit the function if there's an error
             }
         }
     };
