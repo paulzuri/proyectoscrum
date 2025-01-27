@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
+import { HiHome, HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineHome, HiOutlineShoppingCart } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 
@@ -51,7 +51,7 @@ const Navbar = () => {
                 {/* left side */}
                 <div className="flex items-center md:gap-16 gap-4">
                     <Link to="/">
-                        <HiMiniBars3CenterLeft className="size-6" />
+                        <HiOutlineHome className="size-6" />
                     </Link>
                 </div>
 
@@ -117,10 +117,6 @@ const Navbar = () => {
                             </> : <Link to="/login"> <HiOutlineUser className="size-6" /></Link>
                         }
                     </div>
-
-                    <button className="hidden sm:block">
-                        <HiOutlineHeart className="size-6" />
-                    </button>
 
                     <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
                         <HiOutlineShoppingCart className="" />
