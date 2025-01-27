@@ -54,11 +54,8 @@ export const AuthProvide = ({children}) => {
     // login the user
     const loginUser = async (email, password) => {
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            if (!userCredential.user.emailVerified) {
-                throw new Error("Por favor, verifica tu correo antes de iniciar sesión.");
-            }
-            return userCredential;
+            return await signInWithEmailAndPassword(auth, email, password);
+            
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
             throw error;

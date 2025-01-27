@@ -76,7 +76,11 @@ const router = createBrowserRouter([
       {
         path: "/change-password",
         element: <PrivateRoute><ChangePassword/></PrivateRoute>
-      }
+      },
+      {
+        path: "FinishSignUp",
+        element:<FinishSignUp/>
+       }
     ]
     
   },
@@ -108,10 +112,7 @@ const router = createBrowserRouter([
         path: "user-dashboard",
         element: <PrivateRoute><UserDashboard/></PrivateRoute>
       },
-      {
-        path: "FinishSignUp",
-        element:<FinishSignUp/>
-       }
+      
     ]
   }
 ]);

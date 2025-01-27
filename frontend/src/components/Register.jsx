@@ -34,6 +34,7 @@ const Register = () => {
             alert(
                 "Registro exitoso. Por favor, revisa tu correo electrónico para verificar tu cuenta."
             );
+            auth.signOut();
         } catch (error) {
             if (error.message === "Este correo ya está en uso. Por favor, utiliza otro.") {
                 setMessage(error.message); // Mostrar el mensaje en pantalla
@@ -43,6 +44,7 @@ const Register = () => {
             console.error(error);
         }
     };
+     
 
     const handleGoogleSignIn = async () => {
         try {
