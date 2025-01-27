@@ -3,7 +3,7 @@ import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi'
 import { useAuth } from '../../context/AuthContext';
 
 const OrderPage = () => {
-    const { currentUser} = useAuth()
+    const { currentUser } = useAuth()
 
 
     const { data: orders = [], isLoading, isError } = useGetOrderByEmailQuery(currentUser.email);
@@ -25,10 +25,12 @@ const OrderPage = () => {
                                 <p className="text-gray-600">Total Price: ${order.totalPrice}</p>
                                 <h3 className="font-semibold mt-2">Address:</h3>
                                 <p> {order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}</p>
-                                <h3 className="font-semibold mt-2">Products Id:</h3>
+                                <h3 className="font-semibold mt-2">Productos:</h3>
                                 <ul>
-                                    {order.productIds.map((productId) => (
-                                        <li key={productId}>{productId}</li>
+                                    {order.products.map(({ productId, quantity }) => (
+                                        <li key={productId._id}>
+                                            {productId.title} - {quantity} unidad(es)
+                                        </li>
                                     ))}
                                 </ul>
                             </div>

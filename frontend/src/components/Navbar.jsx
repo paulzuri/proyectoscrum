@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
+import { HiHome, HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineHome, HiOutlineShoppingCart } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 
@@ -23,12 +23,19 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState(""); // Manejar el término de búsqueda
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-    const cartItems = useSelector(state => state.cart.cartItems);
-    console.log(cartItems)
 
 
-    
-    const {currentUser, logout} = useAuth();
+    const cartItems = useSelector((state) => state.cart.cartItems);
+
+    // Calcular el número total de productos en el carrito
+    const totalItemsInCart = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+
+
+
+    const { currentUser, logout } = useAuth();
     const handleLogOut = () => {
         logout()
     };
@@ -44,7 +51,7 @@ const Navbar = () => {
                 {/* left side */}
                 <div className="flex items-center md:gap-16 gap-4">
                     <Link to="/">
-                        <HiMiniBars3CenterLeft className="size-6" />
+                        <HiOutlineHome className="size-6" />
                     </Link>
                 </div>
 
@@ -76,8 +83,8 @@ const Navbar = () => {
 
 
 
-               {/* rigth side */}
-               <div className="relative flex items-center md:space-x-3 space-x-2">
+                {/* rigth side */}
+                <div className="relative flex items-center md:space-x-3 space-x-2">
                     <div >
                         {
                             currentUser ? <>
@@ -99,30 +106,26 @@ const Navbar = () => {
                                                     ))
                                                 }
                                                 <li>
-                                                    <button 
-                                                    onClick={handleLogOut}
-                                                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Cerrar Sesion</button>
+                                                    <button
+                                                        onClick={handleLogOut}
+                                                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Cerrar Sesion</button>
                                                 </li>
                                             </ul>
                                         </div>
                                     )
                                 }
-                            </> :                                 <Link to="/login"> <HiOutlineUser className="size-6" /></Link>
+                            </> : <Link to="/login"> <HiOutlineUser className="size-6" /></Link>
                         }
                     </div>
 
-                    <button className="hidden sm:block">
-                        <HiOutlineHeart className="size-6" />
-                    </button>
-
                     <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
-                        <HiOutlineShoppingCart className='' />
-                        {
-                           cartItems.length > 0 ? <span className="text-sm font-semibold 
-                           sm:ml-1">{cartItems.length}</span> : <span className="text-sm 
-                           font-semibold sm:ml-1">0</span>
-                        }
-                        
+                        <HiOutlineShoppingCart className="" />
+                        {totalItemsInCart > 0 && (
+                            <span className="text-sm font-semibold sm:ml-1">
+                                {totalItemsInCart}
+                            </span>
+                        )}
+
                     </Link>
                 </div>
             </nav>

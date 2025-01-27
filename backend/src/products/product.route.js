@@ -1,20 +1,16 @@
 const express = require('express');
 const Product = require('./product.model');
-const { postAProduct, getAllProducts, getSingleProduct, UpdateProduct, deleteAProduct } = require('./product.controller');
-const { verify } = require('jsonwebtoken');
+const { postAProduct, getAllProducts, getSingleProduct, UpdateProduct, deleteAProduct, reduceStock } = require('./product.controller');
 const verifyAdminToken = require('../middleware/verifyAdminToken');
 const router = express.Router();
 
-//post a product
-
+// Post a product
 router.post("/create-product", verifyAdminToken, postAProduct);
 
-// get all products
-router.get("/", getAllProducts)
+// Get all products
+router.get("/", getAllProducts);
 
-
-// search products
-
+// Search products
 router.get("/search", async (req, res) => {
     const { query } = req.query; // Captura el término de búsqueda
     console.log("Término de búsqueda recibido:", query); // Log para verificar qué llega al servidor
@@ -37,14 +33,16 @@ router.get("/search", async (req, res) => {
     }
 });
 
+// Get single product
+router.get("/:id", getSingleProduct);
 
-// get single product
-router.get("/:id", getSingleProduct)
-
-// update a product endpoint
+// Update a product
 router.put("/edit/:id", verifyAdminToken, UpdateProduct);
 
-router.delete("/:id", verifyAdminToken, deleteAProduct)
+// Delete a product
+router.delete("/:id", verifyAdminToken, deleteAProduct);
 
+// Reduce stock
+router.post("/reduce-stock", reduceStock);
 
 module.exports = router;
