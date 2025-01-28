@@ -37,7 +37,7 @@ const CheckoutPage = () => {
     };
 
     const getBaseUrl = () => {
-        return import.meta.env.VITE_API_BASE_URL || 'http://localhost:5050';
+        return import.meta.env.VITE_API_BASE_URL || 'https://frizi-backend.vercel.app';
     };
 
     const reduceStock = async () => {

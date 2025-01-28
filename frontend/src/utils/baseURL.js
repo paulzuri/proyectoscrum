@@ -1,5 +1,5 @@
 const getBaseUrl = () => {
-    return "http://localhost:5050"
+    return "https://frizi-backend.vercel.app"
 }
 
 export default getBaseUrl;
