@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
 const bodyParser = require("body-parser");
+const path = require('path');
 
 require("dotenv").config();
 const {
@@ -25,14 +25,7 @@ app.use(cors({
   credentials: true
 }));
 
-// Database Connection
-async function main() {
-  await mongoose.connect(process.env.DB_URL);
-  console.log("Mongodb connected successfully!");
-}
-main().catch(err => console.error(err));
-
-// Bookstore Routes
+// Routes
 const bookRoutes = require('./src/books/book.route');
 const orderRoutes = require("./src/orders/order.route");
 const userRoutes = require("./src/users/user.route");
@@ -45,7 +38,15 @@ app.use("/api/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 
+// Serve static files (if needed)
+app.use(express.static(path.join(__dirname, 'public')));
 
+// Database Connection
+async function main() {
+  await mongoose.connect(process.env.DB_URL);
+  console.log("Mongodb connected successfully!");
+}
+main().catch(err => console.error(err));
 
 // PayPal Integration
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } = process.env;
@@ -142,5 +143,5 @@ app.use("/", (req, res) => {
 
 // Server Listener
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}/`);
+  console.log(`Unified Server is running on port ${port}`);
 });

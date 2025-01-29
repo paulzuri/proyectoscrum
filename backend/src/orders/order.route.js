@@ -1,12 +1,9 @@
 const express = require('express');
-const { createAOrder, getOrderByEmail } = require('./order.controller');
+const { createAOrder, getOrderByEmail, getInvoice } = require('./order.controller');
+const router = express.Router();
 
-const router =  express.Router();
-
-// create order endpoint
-router.post("/", createAOrder);
-
-// get orders by user email 
-router.get("/email/:email", getOrderByEmail);
+router.post('/', createAOrder);
+router.get('/email/:email', getOrderByEmail);
+router.get('/invoice/:orderId', getInvoice);
 
 module.exports = router;
