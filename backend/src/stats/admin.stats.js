@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const Order = require('../orders/order.model');
-const Book = require('../books/book.model');
+const Product = require('../products/product.model'); // Importa el modelo de productos
 const router = express.Router();
 
-
-// Function to calculate admin stats
+// Función para calcular estadísticas del administrador
 router.get("/", async (req, res) => {
     try {
         // 1. Total number of orders
@@ -21,41 +20,52 @@ router.get("/", async (req, res) => {
             }
         ]);
 
-        // 4. Trending books statistics: 
-        const trendingBooksCount = await Book.aggregate([
-            { $match: { trending: true } },  // Match only trending books
-            { $count: "trendingBooksCount" }  // Return the count of trending books
+        // 3. Trending products statistics
+        const trendingProductsCount = await Product.aggregate([
+            { $match: { trending: true } },  // Filtra solo los productos destacados
+            { $count: "trendingProductsCount" }  // Cuenta los productos destacados
         ]);
-        
-        // If you want just the count as a number, you can extract it like this:
-        const trendingBooks = trendingBooksCount.length > 0 ? trendingBooksCount[0].trendingBooksCount : 0;
+        const trendingProducts = trendingProductsCount.length > 0 ? trendingProductsCount[0].trendingProductsCount : 0;
 
-        // 5. Total number of books
-        const totalBooks = await Book.countDocuments();
+        // 4. Total number of products and total stock
+        const totalProducts = await Product.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalProducts: { $sum: 1 },  // Cuenta el número total de productos
+                    totalStock: { $sum: "$stock" }  // Suma el stock de todos los productos
+                }
+            }
+        ]);
+        const totalProductsCount = totalProducts.length > 0 ? totalProducts[0].totalProducts : 0;
+        const totalStock = totalProducts.length > 0 ? totalProducts[0].totalStock : 0;
 
-        // 6. Monthly sales (group by month and sum total sales for each month)
+        // 5. Monthly sales (group by month and sum total sales for each month)
         const monthlySales = await Order.aggregate([
             {
                 $group: {
-                    _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },  // Group by year and month
-                    totalSales: { $sum: "$totalPrice" },  // Sum totalPrice for each month
-                    totalOrders: { $sum: 1 }  // Count total orders for each month
+                    _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },  // Agrupa por año y mes
+                    totalSales: { $sum: "$totalPrice" },  // Suma el total de ventas por mes
+                    totalOrders: { $sum: 1 }  // Cuenta el total de pedidos por mes
                 }
             },
-            { $sort: { _id: 1 } }  
+            { $sort: { _id: 1 } }  // Ordena por fecha ascendente
         ]);
 
-        // Result summary
-        res.status(200).json({  totalOrders,
+        // Resultado final
+        res.status(200).json({
+            totalOrders,
             totalSales: totalSales[0]?.totalSales || 0,
-            trendingBooks,
-            totalBooks,
-            monthlySales, });
-      
+            trendingProducts,
+            totalProducts: totalProductsCount,
+            totalStock,
+            monthlySales,
+        });
+
     } catch (error) {
         console.error("Error fetching admin stats:", error);
         res.status(500).json({ message: "Failed to fetch admin stats" });
     }
-})
+});
 
 module.exports = router;
