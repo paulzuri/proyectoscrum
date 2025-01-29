@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { useAuth } from '../context/AuthContext';
-
+import ReCAPTCHA from 'react-google-recaptcha';
+import { getAuth } from "firebase/auth";
 
 
 const Register = () => {
     const [message, setMessage] = useState("")
     const {registerUser, signInWithGoogle} = useAuth();
+    const [verified, setVerified] = useState(false);
+    const auth = getAuth();
+
     console.log(registerUser)
     const {
         register,
@@ -30,11 +34,15 @@ const Register = () => {
       //registeruser
     const onSubmit = async (data) => {
         try {
+            if (!verified) {
+                alert('Por favor, completa la verificación reCAPTCHA');
+                return;}
             await registerUser(data.email, data.password);
             alert(
                 "Registro exitoso. Por favor, revisa tu correo electrónico para verificar tu cuenta."
             );
             auth.signOut();
+           
         } catch (error) {
             if (error.message === "Este correo ya está en uso. Por favor, utiliza otro.") {
                 setMessage(error.message); // Mostrar el mensaje en pantalla
@@ -105,7 +113,15 @@ const Register = () => {
                 {errors.password && (
                 <p className="text-red-500 text-xs italic mt-2">{errors.password.message}</p>
                 )}
+            
             </div>
+
+            <ReCAPTCHA
+                sitekey="6Lc_RcYqAAAAAInONx_ZcINNUH0smK35pK7L6GC0"
+                onChange={(value) => {
+                    setVerified(true);
+                }}
+            />
 
             {
                 message && <p className='text-red-500 text-xs italic mb-3'>{message}</p>
