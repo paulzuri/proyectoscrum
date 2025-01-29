@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { useAuth } from '../context/AuthContext';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 
 
@@ -12,6 +13,7 @@ const Login = () => {
     const navigate = useNavigate()
     const [attempts, setAttempts] = useState(0);
     const [isBlocked, setIsBlocked] = useState(false);
+    const [verified, setVerified] = useState(false);
 
     const {
         register,
@@ -25,8 +27,12 @@ const Login = () => {
             alert("Demasiados intentos fallidos. Por favor, inténtelo más tarde, o regístrese si no tiene una cuenta.");
             return;
         }
+        
 
         try {
+            if (!verified) {
+                alert('Por favor, completa la verificación reCAPTCHA');
+                return;}
             await loginUser(data.email, data.password);
             setAttempts(0);
             alert("¡Inicio de sesión exitoso! Bienvenido a Frizi.");
@@ -98,6 +104,13 @@ const Login = () => {
                 {errors.password && <p className="text-red-500 text-xs italic">{errors.password.message}</p>}
 
             </div>
+
+            <ReCAPTCHA
+                sitekey="6Lc_RcYqAAAAAInONx_ZcINNUH0smK35pK7L6GC0"
+                onChange={(value) => {
+                    setVerified(true);
+                }}
+            />
 
             {
                 message && <p className='text-red-500 text-xs italic mb-3'>{message}</p>
