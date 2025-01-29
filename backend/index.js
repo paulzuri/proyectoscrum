@@ -136,6 +136,21 @@ app.post("/api/paypal/orders/:orderID/capture", async (req, res) => {
   }
 });
 
+// Routes
+// Add this specific invoice route BEFORE the generic "/" route
+app.get('/orders/invoice/:orderId', (req, res) => {
+  // Forward to your order controller's getInvoice function
+  require('./src/orders/order.controller').getInvoice(req, res);
+});
+
+// Other routes
+app.use("/api/orders", orderRoutes);
+
+// Default Route (now only catches root path)
+app.get("/", (req, res) => {
+  res.send("Unified Server is running!");
+});
+
 // Default Route
 app.use("/", (req, res) => {
   res.send("Unified Server is running!");
