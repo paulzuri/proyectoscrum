@@ -21,6 +21,7 @@ import {
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
+
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice * item.quantity, 0).toFixed(2);
