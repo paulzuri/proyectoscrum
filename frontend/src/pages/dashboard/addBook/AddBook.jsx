@@ -11,11 +11,12 @@ const AddBook = () => {
     const [imageFile, setimageFile] = useState(null);
     const [addBook, {isLoading, isError}] = useAddProductMutation()
     const [imageFileName, setimageFileName] = useState('')
+    
     const onSubmit = async (data) => {
- 
         const newBookData = {
             ...data,
-            coverImage: imageFileName
+            coverImage: imageFileName,
+            stock: Number(data.stock) // Convertir a número
         }
         try {
             await addBook(newBookData).unwrap();
@@ -35,7 +36,6 @@ const AddBook = () => {
             console.error(error);
             alert("Error, vuelva a intentar")   
         }
-      
     }
 
     const handleFileChange = (e) => {
@@ -45,8 +45,9 @@ const AddBook = () => {
             setimageFileName(file.name);
         }
     }
+
   return (
-    <div className="max-w-lg   mx-auto md:p-6 p-3 bg-white rounded-lg shadow-md">
+    <div className="max-w-lg mx-auto md:p-6 p-3 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Agregar Producto</h2>
 
       {/* Form starts here */}
@@ -101,6 +102,21 @@ const AddBook = () => {
             <span className="ml-2 text-sm font-semibold text-gray-700">Mas vendidos</span>
           </label>
         </div>
+
+        {/* Nuevo campo para el stock */}
+        <InputField
+          label="Stock"
+          name="stock"
+          type="number"
+          placeholder="Ingresa la cantidad en stock"
+          register={register}
+          options={{
+            min: {
+              value: 0,
+              message: "El stock no puede ser negativo"
+            }
+          }}
+        />
 
         {/* Old Price */}
         <InputField
