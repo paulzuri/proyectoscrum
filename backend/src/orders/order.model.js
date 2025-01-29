@@ -10,10 +10,12 @@ const orderSchema = new mongoose.Schema({
         required: true,
     },
     address: {
-        city: { type: String, required: true },
-        country: String,
-        state: String,
-        zipcode: String,
+        type: String, // Ahora el campo 'address' será un solo string (dirección completa)
+        required: true
+    },
+    referencia: { // Nuevo campo
+        type: String,
+        required: true,
     },
     phone: { type: Number, required: true },
     products: [

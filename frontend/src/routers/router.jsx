@@ -18,10 +18,16 @@ import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
 import PaypalPayment from "../pages/books/PaypalPayment";
 import FinishSignUp from "../components/FinishSignUp";
+import TermsAndConditions from "../pages/TermsAndConditions";
+import PurchasePolicy from "../pages/PurchasePolicy";
+
 // import Paypal from "../pages/books/Paypal";
 import ForgotPassword from "../components/ForgotPsswd";
 import ChangePassword from "../components/ChangePassword";
 
+import Services from '../pages/Services';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +38,15 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      { path: "/terms-and-conditions",
+        element: <TermsAndConditions /> 
+      },
+      { path: "/purchase-policy",
+        element: <PurchasePolicy /> 
+      },
+      { path: "/services", element: <Services /> },
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
       {
         path: "FinishSignUp",
         element: <FinishSignUp />
