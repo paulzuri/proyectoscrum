@@ -14,7 +14,7 @@ const UserDashboard = () => {
         <div className=" bg-gray-100 py-16">
             <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
                 <h1 className="text-2xl font-bold mb-4">Dashboard de Usuario</h1>
-                <p className="text-gray-700 mb-6">Bienvenido, {currentUser?.name || 'User'}! Aqui estan tus ultimas ordenes:</p>
+                <p className="text-gray-700 mb-6">Bienvenido!</p>
 
                     <p className="inline-block align-baseline font-medium mt-4 text-sm">
                         Quieres cambiar de contraseña?

@@ -125,19 +125,17 @@ const CheckoutPage = () => {
         try {
             console.log("Creating order with data:", newOrder);
             const response = await createOrder(newOrder).unwrap();
-            console.log("Order created successfully:", response);
             Swal.fire({
-                title: "Confirmed Order",
-                text: "Your order placed successfully!",
+                title: "Orden Confirmada",
+                text: "Tu orden a sido procesada con exito!",
                 icon: "success",
                 confirmButtonText: "OK"
             });
             navigate("/orders");
         } catch (error) {
-            console.error("Error placing an order", error);
             Swal.fire({
                 title: "Error",
-                text: "Failed to place an order.",
+                text: "Error al crear la orden, intente nuevamente.",
                 icon: "error",
                 confirmButtonText: "OK"
             });
