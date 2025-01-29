@@ -1,7 +1,7 @@
-import React from 'react'
-import footerLogo  from "../assets/footer-logo.png"
-
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
+import React from 'react';
+import footerLogo from "../assets/footer-logo.png";
+import { Link } from 'react-router-dom';
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -12,10 +12,10 @@ const Footer = () => {
         <div className="md:w-1/2 w-full">
           <img src={footerLogo} alt="Logo" className="mb-5 w-36" />
           <ul className="flex flex-col md:flex-row gap-4">
-            <li><a href="#home" className="hover:text-primary">Tienda</a></li>
-            <li><a href="#services" className="hover:text-primary">Servicios</a></li>
-            <li><a href="#about" className="hover:text-primary">Sobre nosotros</a></li>
-            <li><a href="#contact" className="hover:text-primary">Contacto</a></li>
+            <li><Link to="/" className="hover:text-primary">Tienda</Link></li>
+            <li><Link to="/services" className="hover:text-primary">Servicios</Link></li>
+            <li><Link to="/about" className="hover:text-primary">Sobre nosotros</Link></li>
+            <li><Link to="/contact" className="hover:text-primary">Contacto</Link></li>
           </ul>
         </div>
 
@@ -41,8 +41,8 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center mt-10 border-t border-gray-700 pt-6">
         {/* Left Side - Privacy Links */}
         <ul className="flex gap-6 mb-4 md:mb-0">
-          <li><a href="#privacy" className="hover:text-primary">Política de privacidad</a></li>
-          <li><a href="#terms" className="hover:text-primary">Términos de servicio</a></li>
+          <li><Link to="/terms-and-conditions" className="hover:text-primary">Términos y Condiciones</Link></li>
+          <li><Link to="/purchase-policy" className="hover:text-primary">Política de Compra</Link></li>
         </ul>
 
         {/* Right Side - Social Icons */}
@@ -59,7 +59,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

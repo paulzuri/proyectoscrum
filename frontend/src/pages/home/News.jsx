@@ -22,36 +22,36 @@ import news4 from '../../assets/news/news-4.png'
 
 
 const news = [
-    {
-        "id": 1,
-        "title": "Frizi abre nuevas sucursales en Valle de los Chillos",
-        "description": "Ahora Frizi está más cerca de ti, con nuevas sucursales para que tus compras sean más rápidas y cómodas. Visítanos en Valle de los Chillos.",
-        "image": news1
-    },
-    {
-        "id": 2,
-        "title": "El compromiso de Frizi con la comunidad",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget nunc. Nullam nec purus nec nunc ultricies ultricies. Nullam nec purus nec nunc ultricies ultricies.",
-        "image": news2
-    },
-    {
-        "id": 3,
-        "title": "New Space Mission Aims to Explore Distant Galaxies",
-        "description": "NASA has unveiled plans for a new space mission that will aim to explore distant galaxies, with hopes of uncovering insights into the origins of the universe.",
-        "image": news3
-    },
-    {
-        "id": 4,
-        "title": "Stock Markets Reach Record Highs Amid Economic Recovery",
-        "description": "Global stock markets have reached record highs as signs of economic recovery continue to emerge following the challenges posed by the global pandemic.",
-        "image": news4
-    },
-    {
-        "id": 5,
-        "title": "Innovative New Smartphone Released by Leading Tech Company",
-        "description": "A leading tech company has released its latest smartphone model, featuring cutting-edge technology, improved battery life, and a sleek new design.",
-        "image": news2
-    }
+  {
+    "id": 1,
+    "title": "Frizi abre nuevas sucursales en Valle de los Chillos",
+    "description": "Ahora Frizi está más cerca de ti, con nuevas sucursales para que tus compras sean más rápidas y cómodas. Visítanos en Valle de los Chillos.",
+    "image": news1
+},
+{
+    "id": 2,
+    "title": "El compromiso de Frizi con la comunidad",
+    "description": "En Frizi, estamos comprometidos con el bienestar de nuestra comunidad. Participamos activamente en iniciativas locales, apoyamos a pequeñas empresas y promovemos prácticas sostenibles para un futuro mejor.",
+    "image": news2
+},
+{
+    "id": 3,
+    "title": "Frizi lanza una nueva línea de productos ecológicos",
+    "description": "Frizi se enorgullece en anunciar el lanzamiento de una nueva línea de productos ecológicos. Estos productos están diseñados para ser amigables con el medio ambiente y ayudar a nuestros clientes a reducir su huella de carbono.",
+    "image": news1
+},
+{
+    "id": 4,
+    "title": "Frizi implementa envíos gratuitos para compras mayores a $50",
+    "description": "Para mejorar la experiencia de nuestros clientes, Frizi ha implementado envíos gratuitos para todas las compras mayores a $50. Aprovecha esta oferta y disfruta de tus productos favoritos sin costo adicional de envío.",
+    "image": news2
+},
+{
+    "id": 5,
+    "title": "Frizi celebra su aniversario con grandes descuentos",
+    "description": "Frizi está celebrando su aniversario con grandes descuentos en toda la tienda. No te pierdas esta oportunidad de obtener tus productos favoritos a precios reducidos. La promoción es válida por tiempo limitado.",
+    "image": news1
+}
 ]
 
 const News = () => {
