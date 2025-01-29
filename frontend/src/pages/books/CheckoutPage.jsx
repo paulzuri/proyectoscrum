@@ -19,7 +19,8 @@ import {
     useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 
-const API_KEY = globalThis.GOOGLE_MAPS_API_KEY ?? "AIzaSyDVXzFtkFVLmWbBTUWt8BOYuxspzgmA4fM";
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
