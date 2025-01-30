@@ -11,20 +11,39 @@ const createAOrder = async (req, res) => {
         // Populate product details
         savedOrder = await savedOrder.populate('products.productId');
   
-        // Create invoices directory
-        const invoicesDir = path.join(__dirname, '../../../invoices');
-        if (!fs.existsSync(invoicesDir)) {
-            fs.mkdirSync(invoicesDir, { recursive: true });
-        }
-  
-        // Generate PDF invoice
-        const invoicePath = path.join(invoicesDir, `invoice_${savedOrder._id}.pdf`);
-        await generateInvoice(savedOrder, invoicePath); // Await the PDF generation
-  
         res.status(200).json(savedOrder);
     } catch (error) {
         console.error('Error creating order', error);
         res.status(500).json({ message: 'Failed to create order' });
+    }
+};
+
+const downloadInvoice = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const order = await Order.findById(orderId).populate('products.productId');
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Generate PDF invoice
+        const invoicePath = path.join(__dirname, `../../../invoices/invoice_${order._id}.pdf`);
+        await generateInvoice(order, invoicePath);
+
+        // Send the PDF file to the client
+        res.download(invoicePath, `invoice_${order._id}.pdf`, (err) => {
+            if (err) {
+                console.error('Error downloading invoice:', err);
+                res.status(500).json({ message: 'Failed to download invoice' });
+            }
+
+            // Delete the file after sending it to the client
+            fs.unlinkSync(invoicePath);
+        });
+    } catch (error) {
+        console.error('Error generating invoice', error);
+        res.status(500).json({ message: 'Failed to generate invoice' });
     }
 };
 

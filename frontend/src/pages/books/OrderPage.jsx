@@ -11,12 +11,12 @@ const OrderPage = () => {
     const handleDownloadInvoice = async (orderId) => {
         try {
             setDownloadingId(orderId);
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/orders/invoice/${orderId}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/orders/download-invoice/${orderId}`);
             
             if (!response.ok) {
                 throw new Error('Failed to download invoice');
             }
-
+    
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
